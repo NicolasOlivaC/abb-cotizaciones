@@ -107,7 +107,7 @@ li{
 }
 
 .formContainer2{
-    height: 520px;
+    height: 580px;
     display: flex;
     flex-direction: column;
     gap:40px;
@@ -119,6 +119,10 @@ li{
 }
 .formContainer2_1_1{
     width: 25%;
+}
+.formContainer2_1_1_1{
+    display: flex;
+    justify-content: center;
 }
 
 .formContainer2_1_2{

@@ -1,11 +1,22 @@
-// import PropTypes from 'prop-types'
-
+import React from 'react'
+import axios from "axios";
 import Input from './inputForm'
 import MiTable from './table'
-const motorForm2 = ({rpm, hp, peso, eficiencia, voltaje}) => {
+const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje }) => {
 
     console.log("rendericé motorForm2")
     const dummy = "asd"
+    const local = process.env.REACT_APP_LOCAL_HOST
+    const getInfoMotor = (e) => {
+        e.preventDefault()
+        let motorData = { ...rpm.rpm, ...hp.hp, ...peso.peso, ...eficiencia.eficiencia, ...voltaje.voltaje }
+        delete motorData.valido;
+        axios.post(local + "/dataMotor", motorData)
+            .then((received) => {
+                const message = received.data
+                console.log(message)
+            })
+    }
 
     return (
         <div className="formContainer2 mt-1 border py-3 px-3 bg-light ">
@@ -66,7 +77,9 @@ const motorForm2 = ({rpm, hp, peso, eficiencia, voltaje}) => {
                         errorLabel={dummy}
                         typeForm="text"
                     />
-
+                    <div className="formContainer2_1_1_1">
+                        <button className="btn btn-primary center" onClick={getInfoMotor}>Obtener coincidencias</button>
+                    </div>
                 </form>
                 <div className="formContainer2_1_2 mx-5">
                     <MiTable />
@@ -82,4 +95,4 @@ const motorForm2 = ({rpm, hp, peso, eficiencia, voltaje}) => {
 
 // }
 
-export default motorForm2
+export default MotorForm2
