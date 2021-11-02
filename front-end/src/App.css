@@ -1,0 +1,164 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+body{
+    background-color: #f6f6f6;
+    font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    /* margin-left:311.500px;
+    margin-right: 311.500px; */
+    margin-left:16.225vw;
+    margin-right: 16.225vw;
+    width:1280px;
+    height: 1816px;
+}
+
+.contenedor{
+    background-color: white;
+    padding-top:39px;
+    padding-left:37px;
+    padding-right: 37px;
+    display:flex;
+    flex-direction: column;
+}
+
+.contenedor2{
+    padding:10px;
+}
+
+.contenedor3{
+    display: flex;
+    justify-content: center;
+}
+.navBar{
+    display:flex;
+    flex-direction: row;
+}
+
+.listItem{
+    font-size:10.5px;
+    display:flex ;
+    align-self: end;
+    margin-left:14px;
+    margin-bottom: 0px;
+    gap:14px;
+    padding-left: 2.5px;
+    
+}
+
+li{
+    /* margin-left:14px; */
+    list-style-type: none; 
+}
+
+.imgf{
+    width: 1183px;
+    height: 351.594px;
+    margin-top:18px;
+    margin-bottom: 20px;
+    
+}
+.tittle{
+    margin-top:50px;
+}
+
+.motorForm{
+    padding-top: 50px;
+    width: 350px;
+    height: 300px;
+    background-color: #f6f6f6;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top:50px;
+    
+}
+
+.inputForm{
+    
+    width: 250px;
+    height: 25px;
+    padding-left: 15px;
+    border-radius: 5px;
+}
+
+
+.formContainer1{
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.formContainer1_1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 80px;
+}
+
+.formContainer1_1_1{
+    width: 300px;
+}
+
+.formContainer1_1_2{
+    width: 300px;
+}
+
+.formContainer2{
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    gap:40px;
+}
+
+.formContainer2_1{
+    display: flex;
+    flex-direction: row;
+}
+.formContainer2_1_1{
+    width: 25%;
+}
+
+.formContainer2_1_2{
+    width: 75%;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start ;
+    gap:10px
+
+}
+
+.formContainer3{
+    height: 520px;
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.formContainer3_1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.formContainer3_1_1{
+    width: 750px;
+} 
+
+.inputFunc{
+    height: 330px;
+}
+
+.elemento{
+    background-color: yellowgreen;
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+}
+
+.utilChange:after{
+    content: "Enviar"
+}
