@@ -10,7 +10,6 @@ const inputRegex = [
 
 const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, setFormData, regExpression, errorLabel, typeForm, valido }) => {
     console.log("rendericé input form" + name)
-
     const handleChange = (e) =>{
         setFormData({...formData, [e.target.name] : e.target.value})
     }

@@ -7,10 +7,14 @@ import MotorForm1 from './motorForm1';
 import MotorForm2 from './motorForm2';
 import MotorForm3 from './motorForm3'
 
+import Modal from './modal'
+
 const Form = props => {
     console.log("rendericé form")
     const local = process.env.REACT_APP_LOCAL_HOST
     const { number, addOne, removeOne } = counter(0)
+
+    const [show, setShow] = useState(false)
 
     const [nombre, setNombre] = useState({ nombre: '', valido: null })
     const [apellido, setApellido] = useState({ apellido: '', valido: null })
@@ -25,15 +29,19 @@ const Form = props => {
     const [eficiencia, setEficiencia] = useState({ eficiencia: '', valido: null })
     const [voltaje, setVoltaje] = useState({ voltaje: '', valido: null })
 
+    const [pregunta, setPregunta] = useState('')
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        const contactData = { ...nombre, ...apellido, ...rut , ...telefono, ...email, ...empresa }
+        const contactData = { ...nombre, ...apellido, ...rut, ...telefono, ...email, ...empresa }
 
-        axios.post(local + "/dataCotizacion", { contactData })
+        axios.post(local + "/dataCotizacion", { contactData, pregunta })
             .then((received) => {
                 const { message } = received.data
                 console.log(message)
+                setShow(true)
             })
+        setShow(true)
     }
 
     const validateSteps = () => {
@@ -79,7 +87,7 @@ const Form = props => {
                     voltaje={{ voltaje, setVoltaje }}
                 />
             case 2:
-                return <MotorForm3 />
+                return <MotorForm3 pregunta={pregunta} setPregunta={setPregunta} />
             default:
                 break;
         }
@@ -87,6 +95,7 @@ const Form = props => {
 
     return (
         <>
+
             {handleComponentForm()}
 
             <div className="contenedor3 my-5" id="flechas">
@@ -103,6 +112,12 @@ const Form = props => {
                     onClick={(number === 2) ? handleSubmit : validateSteps} >
                 </button>
             </div>
+
+
+
+            { show === true ? <Modal setShow={setShow}/> : <h1> </h1>}
+
+
         </>)
 }
 

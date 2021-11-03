@@ -191,3 +191,24 @@ div ul li{
     align-items: center;
 }
 
+
+.modalContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:  #cfcfcfbd;
+    display:flex;
+
+}
+
+.modalContent{
+    
+    background-color: #f6f6f6;
+    margin: auto;
+    /* opacity: 100%; */
+    width: 30%;
+    height: auto;
+    opacity: 100%;
+}
