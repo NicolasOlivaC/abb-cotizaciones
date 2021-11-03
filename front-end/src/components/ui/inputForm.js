@@ -4,7 +4,8 @@ const inputRegex = [
     /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/,
     /^[0-9]+$/,
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+[.]+[a-zA-Z0-9._-]+$/,
-    /[a-zA-Z0-9À-ÿ\u00f1\u00d1.-]+$/
+    /[a-zA-Z0-9À-ÿ\u00f1\u00d1.-]+$/,
+    /^[0-9]+[-|‐]{1}[0-9kK]{1}$/
 ]
 
 const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, setFormData, regExpression, errorLabel, typeForm, valido }) => {

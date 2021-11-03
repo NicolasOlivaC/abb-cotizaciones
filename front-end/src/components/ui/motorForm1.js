@@ -1,17 +1,17 @@
 import React from 'react'
 import image from '../../image/place.jpg'
 import Input from './inputForm'
-const MotorForm1 = ({ nombre, apellido, telefono, email, empresa }) => {
+const MotorForm1 = ({ nombre, apellido, rut, telefono, email, empresa }) => {
 
     console.log("rendericé motorForm1")
-    
+
     return (
         <div className="formContainer1 mt-1 border  py-3 px-3 bg-light ">
             <h5>Ingresar información de contacto.</h5>
 
             <div className="formContainer1_1 mt-3">
                 <div className="formContainer1_1_1">
-                    <img className="w-100" src={image} alt="place" />
+                    <img className="imgff" src={image} alt="place" />
                 </div>
 
                 <form className="formContainer1_1_2">
@@ -25,6 +25,7 @@ const MotorForm1 = ({ nombre, apellido, telefono, email, empresa }) => {
                         errorLabel="El nombre no debe contener espacios vacios y caracteres especiales"
                         typeForm="text"
                     />
+                    
                     <Input
                         inputTittle="Apellido"
                         name="apellido"
@@ -33,6 +34,16 @@ const MotorForm1 = ({ nombre, apellido, telefono, email, empresa }) => {
                         setFormData={apellido.setApellido}
                         regExpression={1}
                         errorLabel={"El apellido no debe contener espacios vacios y caracteres especiales"}
+                        typeForm="text"
+                    />
+                    <Input
+                        inputTittle="Rut"
+                        name="rut"
+                        placeholderText="12345678-9"
+                        formData={rut.rut}
+                        setFormData={rut.setRut}
+                        regExpression={5}
+                        errorLabel="Ingresa un formato de rut valido"
                         typeForm="text"
                     />
                     <Input
@@ -52,7 +63,7 @@ const MotorForm1 = ({ nombre, apellido, telefono, email, empresa }) => {
                         formData={email.email}
                         setFormData={email.setEmail}
                         regExpression={3}
-                        errorLabel={ "Ingresa un correo electronico valido"}
+                        errorLabel={"Ingresa un correo electronico valido"}
                         typeForm="email"
                     />
                     <Input

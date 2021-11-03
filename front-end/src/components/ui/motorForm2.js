@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from "axios";
 import Input from './inputForm'
 import MiTable from './table'
@@ -7,6 +7,7 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje }) => {
     console.log("rendericé motorForm2")
     const dummy = "asd"
     const local = process.env.REACT_APP_LOCAL_HOST
+    const [data, setData] = useState([])
     const getInfoMotor = (e) => {
         e.preventDefault()
         let motorData = { ...rpm.rpm, ...hp.hp, ...peso.peso, ...eficiencia.eficiencia, ...voltaje.voltaje }
@@ -15,23 +16,26 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje }) => {
             .then((received) => {
                 const message = received.data
                 console.log(message)
+                setData(message)
             })
     }
 
     return (
         <div className="formContainer2 mt-1 border py-3 px-3 bg-light ">
-            <h5>Ingresar especificación de motor</h5>
-            <div className="formContainer2_1">
-                <form className="formContainer2_1_1 mx-2">
+            <h5 className="">Ingresar especificación de motor</h5>
+
+            <div className="border border-body  mt-2 py-3">
+
+                <form className="formContainer2_1 mx-2">
                     <Input
                         inputTittle="Revoluciones por minuto"
                         name="rpm"
                         placeholderText="xx"
                         formData={rpm.rpm}
                         setFormData={rpm.setRpm}
-                        regExpression={1}
+                        regExpression={2}
                         errorLabel={dummy}
-                        typeForm="text"
+                        typeForm="number"
                     />
 
                     <Input
@@ -40,9 +44,9 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje }) => {
                         placeholderText="xx"
                         formData={hp.hp}
                         setFormData={hp.setHp}
-                        regExpression={1}
+                        regExpression={2}
                         errorLabel={dummy}
-                        typeForm="text"
+                        typeForm="number"
                     />
 
                     <Input
@@ -51,9 +55,9 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje }) => {
                         placeholderText="xx"
                         formData={peso.peso}
                         setFormData={peso.setPeso}
-                        regExpression={1}
+                        regExpression={2}
                         errorLabel={dummy}
-                        typeForm="text"
+                        typeForm="number"
                     />
 
                     <Input
@@ -62,9 +66,9 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje }) => {
                         placeholderText="xx"
                         formData={eficiencia.eficiencia}
                         setFormData={eficiencia.setEficiencia}
-                        regExpression={1}
+                        regExpression={2}
                         errorLabel={dummy}
-                        typeForm="text"
+                        typeForm="number"
                     />
 
                     <Input
@@ -73,17 +77,20 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje }) => {
                         placeholderText="xx"
                         formData={voltaje.voltaje}
                         setFormData={voltaje.setVoltaje}
-                        regExpression={1}
+                        regExpression={2}
                         errorLabel={dummy}
-                        typeForm="text"
+                        typeForm="number"
                     />
-                    <div className="formContainer2_1_1_1">
-                        <button className="btn btn-primary center" onClick={getInfoMotor}>Obtener coincidencias</button>
-                    </div>
                 </form>
-                <div className="formContainer2_1_2 mx-5">
-                    <MiTable />
+
+                <div className="formContainer2_2">
+                    <button className="btn btn-danger center" onClick={getInfoMotor}>Obtener coincidencias</button>
                 </div>
+
+            </div>
+
+            <div className="formContainer2_3 mx-5">
+                {data.length > 0 ? <MiTable data={data} /> : <h1> </h1>}
             </div>
 
         </div>

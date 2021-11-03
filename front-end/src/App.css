@@ -1,6 +1,7 @@
 *{
     margin:0px;
     padding:0px;
+    
 }
 body{
     background-color: #f6f6f6;
@@ -46,7 +47,7 @@ body{
     
 }
 
-li{
+div ul li{
     /* margin-left:14px; */
     list-style-type: none; 
 }
@@ -85,7 +86,7 @@ li{
 
 
 .formContainer1{
-    height: 520px;
+    height: auto;
     display: flex;
     flex-direction: column;
     
@@ -99,34 +100,48 @@ li{
 }
 
 .formContainer1_1_1{
-    width: 300px;
+    width: 350px;
+}
+.imgff{
+    width: 350px;
 }
 
 .formContainer1_1_2{
-    width: 300px;
+    width: 25%;
 }
 
 .formContainer2{
-    height: 580px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    gap:40px;
 }
 
-.formContainer2_1{
+/* .formContainer2_1{
     display: flex;
     flex-direction: row;
-}
-.formContainer2_1_1{
-    width: 25%;
-}
-.formContainer2_1_1_1{
+    gap:30px
+} */
+.formContainer2_1{
+    width: 100%;
     display: flex;
     justify-content: center;
+    gap: 10px;
+    padding-top: 30px;
+}
+.formContainer2_2{
+    display: flex;
+    justify-content: center;
+    padding-top: 0px;
+    
 }
 
-.formContainer2_1_2{
-    width: 75%;
+.formContainer2_3{
+    padding-top: 50px;
+    
+}
+
+/* .formContainer2_1_2{
+    width: 92%;
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -134,13 +149,14 @@ li{
     align-content: flex-start ;
     gap:10px
 
-}
+} */
 
 .formContainer3{
     height: 520px;
     display:flex;
     flex-direction: column;
     gap:20px;
+    
 }
 
 .formContainer3_1{
@@ -166,3 +182,12 @@ li{
 .utilChange:after{
     content: "Enviar"
 }
+
+.contentTable {
+    display: flex;
+    flex-direction: row;
+    gap: 90px;
+    justify-content: center;
+    align-items: center;
+}
+

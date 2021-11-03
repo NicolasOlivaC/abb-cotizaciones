@@ -1,19 +1,19 @@
 import React from 'react'
 import TableItem from './tableItem'
 
-const Table = props => {
+const Table = ({data}) => {
     return (
-        <table className="table">
+        <table className="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Catalog Number</th>
-                    <th scope="col">Caracteristicas</th>
-                    <th scope="col">Seleccionar</th>
+                    <th className="text-center col-1">#</th>
+                    <th className="text-center col-3">Catalog Number</th>
+                    <th className="text-center col">Caracteristicas</th>
+                    <th className="text-center col-1"> * </th>
                 </tr>
             </thead>
             <tbody>
-                <TableItem />
+                {data.map((item, index) => <TableItem key={index} indice={index+1} data={item}/> )}
             </tbody>
         </table>
     )

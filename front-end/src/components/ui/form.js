@@ -14,6 +14,7 @@ const Form = props => {
 
     const [nombre, setNombre] = useState({ nombre: '', valido: null })
     const [apellido, setApellido] = useState({ apellido: '', valido: null })
+    const [rut, setRut] = useState({ rut: '', valido: null })
     const [telefono, setTelefono] = useState({ telefono: '', valido: null })
     const [email, setEmail] = useState({ email: '', valido: null })
     const [empresa, setEmpresa] = useState({ empresa: '', valido: null })
@@ -26,7 +27,7 @@ const Form = props => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const contactData = { ...nombre, ...apellido, ...telefono, ...email, ...empresa }
+        const contactData = { ...nombre, ...apellido, ...rut , ...telefono, ...email, ...empresa }
 
         axios.post(local + "/dataCotizacion", { contactData })
             .then((received) => {
@@ -37,7 +38,7 @@ const Form = props => {
 
     const validateSteps = () => {
         if (number === 0) {
-            if (nombre.valido === true && apellido.valido === true && telefono.valido === true && email.valido && empresa.valido === true) {
+            if (nombre.valido === true && apellido.valido === true && telefono.valido === true && email.valido && empresa.valido === true && rut.valido === true) {
                 addOne()
             }
             else {
@@ -63,6 +64,7 @@ const Form = props => {
                 return <MotorForm1
                     nombre={{ nombre, setNombre }}
                     apellido={{ apellido, setApellido }}
+                    rut={{ rut, setRut }}
                     telefono={{ telefono, setTelefono }}
                     email={{ email, setEmail }}
                     empresa={{ empresa, setEmpresa }}

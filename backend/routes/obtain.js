@@ -13,7 +13,7 @@ router.post('/dataMotor', (req, res) =>{
   const data = req.body;
   const {rpm, hp, peso, eficiencia, voltaje} = data
   console.log(rpm, hp, peso, eficiencia, voltaje)
-  mysql.query("ACA VA LA CONSULTA", (error, data)=>{
+  mysql.query("SELECT * FROM motores", (error, data)=>{
     if(error){
       console.log(error)
       res.json(error)
