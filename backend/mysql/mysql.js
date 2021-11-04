@@ -1,4 +1,7 @@
 var mysql      = require('mysql');
+var { promisify } = require('util');
+
+
 const host = process.env.HOST
 const user = process.env.USER
 const password = process.env.PASSWORD
@@ -19,5 +22,7 @@ connection.connect(function(err) {
  
   console.log('connected as id ' + connection.threadId);
 });
+
+connection.query = promisify(connection.query);
 
 module.exports = connection;

@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Pm = props => {
 
-    const fakeData = { nombre: "jhon", apellido: "Doe", email: "jhon@doe.com", telefono: 962203194 }
+    
+    const [data, setData] = useState(null)
+    console.log(data)
+    useEffect(() => {
+        const local = process.env.REACT_APP_LOCAL_HOST
+        axios.get(`${local}/obtainDataCotizacion/${222}`)
+            .then((received) => {
+                setData({ ...received.data[0], ...received.data[1], answ: [...received.data[2]] })
+            })
+            .catch(error =>{
+                console.log(error)
+            })
+
+    }, [])
+
 
     return (
         <div className="mt-3">
-            <h4>Solicitud de cotización - Fecha de ingreso: xx/xx/xx - Última actualización: xx/xx/xx</h4>
-            <h5>Estado: xx</h5>
+            <h4>Solicitud de cotización - Fecha de ingreso: {data?.fecha_ingreso} - Última actualización: {data?.fecha_update}</h4>
+            <h5>Estado: {data?.estado}</h5>
 
             <div className="divisor">
                 <div className="w-50 h-auto">
@@ -16,23 +31,23 @@ const Pm = props => {
                         <tbody>
                             <tr>
                                 <td className="w-25">Nombre</td>
-                                <td className="w-25">{fakeData.nombre}</td>
+                                <td className="w-25">{data?.nombre}</td>
                             </tr>
                             <tr>
                                 <td className="w-25">Apellido</td>
-                                <td className="w-25">{fakeData.apellido}</td>
+                                <td className="w-25">{data?.apellido}</td>
                             </tr>
                             <tr>
                                 <td className="w-25">Empresa</td>
-                                <td className="w-25">Empresa genial</td>
+                                <td className="w-25">{data?.empresa}</td>
                             </tr>
                             <tr>
                                 <td className="w-25">Email</td>
-                                <td className="w-25">{fakeData.email}</td>
+                                <td className="w-25">{data?.correo}</td>
                             </tr>
                             <tr>
                                 <td className="w-25">Telefono</td>
-                                <td className="w-25">{fakeData.telefono}</td>
+                                <td className="w-25">{data?.telefono}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -43,7 +58,7 @@ const Pm = props => {
                 </div>
 
                 <div className="w-50">
-                    <h4 className="mt-3 text-center">Motor Catalog Number: xxxxx </h4>
+                    <h4 className="mt-3 text-center">Motor Catalog Number: {data?.catalog_number} </h4>
                     <table className="table table-bordered">
                         <thead>
                             <tr>
@@ -55,16 +70,16 @@ const Pm = props => {
                                 <td>
                                     <div className="contentTable">
                                         <div>
-                                            <li >nema_frame: xx </li>
-                                            <li>Voltaje: xx</li>
-                                            <li>rpm: xx</li>
-                                            <li>hp: xx</li>
+                                            <li >nema_frame: {data?.nema_frame} </li>
+                                            <li>Voltaje: {data?.voltag}</li>
+                                            <li>rpm: {data?.rpm}</li>
+                                            <li>hp: {data?.hp}</li>
                                         </div>
                                         <div>
-                                            <li>Disc_sym: xx</li>
-                                            <li>C dim: xx</li>
-                                            <li>aprx wt: xx</li>
-                                            <li>Full load efficiency: xx</li>
+                                            <li>Disc_sym: {data?.Dysc_sym}</li>
+                                            <li>C dim: {data?.c_dim}</li>
+                                            <li>aprx wt: {data?.aprx_wt}</li>
+                                            <li>Full load efficiency: {data?.full_load_efficiency}</li>
                                         </div>
                                     </div>
                                 </td>
@@ -79,17 +94,16 @@ const Pm = props => {
             <div>
                 <h4 className="mt-5 ">Indicaciones de funcionalidad</h4>
                 <div className="divisor2 mb-3 px-3 py-3">
-                    <span><strong>{fakeData.nombre} {fakeData.apellido} - 04/11/2021 - 13:53</strong></span>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias aut, repellat ipsum facere voluptate dicta obcaecati deserunt nobis suscipit eaque?
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias aut, repellat ipsum facere voluptate dicta obcaecati deserunt nobis suscipit eaque?
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias aut, repellat ipsum facere voluptate dicta obcaecati deserunt nobis suscipit eaque?
-                    </p>
-                    <span><strong>Don eduardo PM-ABB - 04/11/2021 - 13:53</strong></span>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias aut, repellat ipsum facere voluptate dicta obcaecati deserunt nobis suscipit eaque?
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias aut, repellat ipsum facere
-                    </p>
+                    
+
+                    {data ? data.answ.map((elemento, indice) =>
+                        <div key={indice}>
+                            <span><strong>{elemento.por} - {elemento.fecha} </strong></span>
+                            <p>{elemento.pregunta}</p>
+                        </div>)
+
+                        : <h1> </h1>
+                    }
                 </div>
                 <div className="d-flex">
                     <button className="btn btn-danger mx-auto">Responder</button>

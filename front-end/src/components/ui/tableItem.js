@@ -23,7 +23,6 @@ const TableItem = ({ indice, data }) => {
                         <li>Full load efficiency: {data.full_load_efficiency}</li>
                     </div>
                 </div>
-
             </td>
             <td className="align-middle">
                 <input className="form-check-input mx-auto contentTable " type="checkbox" value="" />
