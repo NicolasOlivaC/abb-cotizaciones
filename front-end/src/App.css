@@ -84,6 +84,7 @@ div ul li{
     list-style-type: none; 
 }
 
+
 .imgf{
     width: 1183px;
     height: 351.594px;
@@ -251,4 +252,16 @@ a {
     text-decoration:underline;
 }
 
+.divisor{
+    display: flex;
+    flex-direction: row;
+    gap:50px;
+
+}
+
+.divisor2{
+    width: 100%;
+    height: auto;
+    background-color: #f6f6f6;
+}
 

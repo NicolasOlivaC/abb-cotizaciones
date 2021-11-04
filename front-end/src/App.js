@@ -1,4 +1,5 @@
 import React from 'react'
+import { Routes, Route } from "react-router-dom";
 
 import './App.css';
 
@@ -7,7 +8,7 @@ import Navbar from './components/ui/navBar';
 import Form from './components/ui/form';
 import MenuSelect from './components/ui/menuSelect'
 import Demo from './components/ui/demo'
-import { Routes, Route } from "react-router-dom";
+import Pm from './components/view/pm'
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/demo" element={<Demo />}>
             <Route path=":demoID" element={<Demo/>} />
           </Route>
+          <Route exact path="/pm" element={<Pm />} />
           <Route path="*"/>
         </Routes>
       </Routes>
