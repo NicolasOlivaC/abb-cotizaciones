@@ -5,14 +5,20 @@ import './App.css';
 import ImageFrame from './components/ui/imageFrame';
 import Navbar from './components/ui/navBar';
 import Form from './components/ui/form';
+import MenuSelect from './components/ui/menuSelect'
+import Demo from './components/ui/demo'
+import { Routes, Route } from "react-router-dom";
+
 
 function App() {
   console.log("rendericé app")
 
+
+
   return (
     <div className="contenedor" >
       <Navbar />
-      
+
       <div className="contenedor2">
         <h2 className="tittle">Cotizador de motores ABB</h2>
         <ImageFrame />
@@ -26,7 +32,20 @@ function App() {
 
       </div>
 
-      <Form />
+      <Routes>
+        <Routes>
+          <Route exact path="/" element={<MenuSelect />} />
+          <Route exact path="/cotizacion" element={<Form />} />
+          <Route exact path="/demo" element={<Demo />}>
+            <Route path=":demoID" element={<Demo/>} />
+          </Route>
+          <Route path="*"/>
+        </Routes>
+      </Routes>
+
+      {/* <Form /> */}
+
+
     </div>
   );
 }

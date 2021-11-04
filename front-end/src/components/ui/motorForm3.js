@@ -6,9 +6,6 @@ const motorForm3 = ({pregunta, setPregunta}) => {
     const handleChange = (e) =>{
         setPregunta(e.target.value)
     }
-
-    console.log(pregunta)
-
     
     return (
         <div className="formContainer3 mt-1 border py-3 px-3 bg-light ">
