@@ -94,7 +94,7 @@ const Form = props => {
     }
 
     return (
-        <>
+        <div className="mt-5">
 
             {handleComponentForm()}
 
@@ -118,7 +118,7 @@ const Form = props => {
             { show === true ? <Modal setShow={setShow}/> : <h1> </h1>}
 
 
-        </>)
+        </div>)
 }
 
 export default Form

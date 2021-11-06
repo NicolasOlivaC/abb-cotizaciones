@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { Link} from "react-router-dom";
 
+import FirstPlace from './firstPlace';
+
 const MenuSelect = props => {
 
     const [seguimiento, setSeguimiento] = useState('')
@@ -11,7 +13,8 @@ const MenuSelect = props => {
 
     return (
         <>
-            <div className="containerSelect">
+            <FirstPlace />
+            <div className="containerSelect ">
                 <div className="containerSelect1 mt-5 mb-5">
                     <h4>Sigue el estado de tu cotización.</h4>
                     <div className="input-group mb-3">

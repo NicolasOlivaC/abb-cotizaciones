@@ -46,24 +46,44 @@ router.get('/obtainDataCotizacion/:ID', (req, res) => {
 
   mysql.query(query, (error, data1) => {
     if (error || data1[0] === undefined) {
-      res.json([{ message: "error" }])
+      res.json([{ message: "error1" }])
     }
     else {
       mysql.query(query2, data1[0].catalog_number, (error, data2) => {
         if (error || data2[0] === undefined) {
-          res.json([{ message: "error" }])
+          res.json([{ message: "error2" }])
         }
         else {
-          mysql.query(`SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha, pregunta FROM indicaciones WHERE id_cotizacion = ${req.params.ID} ORDER BY fecha`, (error, data3) =>{
-            if(data3[0] === undefined){
+          mysql.query(`SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha, pregunta FROM indicaciones WHERE id_cotizacion = ${req.params.ID} ORDER BY fecha`, (error, data3) => {
+            if (data3[0] === undefined) {
               res.json([...data1, data2[0]])
             }
-            else{
+            else {
               res.json([...data1, data2[0], data3])
             }
           })
         }
       })
     }
+  })
+})
+
+
+router.get('/prelCot', (req, res) => {
+  const option = req.query.option
+
+  const query = `SELECT id_cotizacion,  DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha_ingreso,
+                 DATE_FORMAT(fecha_update,'%d/%m/%Y %H:%i:%s') as fecha_update, nombre, apellido, estado
+                 FROM cotizacion, cotizante
+                 WHERE estado = '${option}' AND Rut_cotizante = id_cotizante`
+
+  mysql.query(query, (error, data) => {
+    if (error) {
+      console.log(error)
+    }
+    else {
+      res.json(data)
+    }
+
   })
 })
