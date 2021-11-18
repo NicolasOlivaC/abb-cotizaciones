@@ -26,10 +26,11 @@ router.post('/dataMotor', (req, res) => {
 
 router.post('/dataCotizacion', (req, res) => {
   const data = req.body;
-  const { contactData, motorData } = data;
+  const { contactData, motorData, pregunta } = data;
   console.log(contactData)
   console.log(motorData)
-  res.json({ message: "datos recibidos" })
+  console.log(pregunta)
+  res.json({ numeroSeg: "este es el ticket de cotizacion" })
 })
 
 

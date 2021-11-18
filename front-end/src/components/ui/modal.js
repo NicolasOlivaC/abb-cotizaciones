@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const Modal = ({setShow}) => {
+const Modal = ({seguimiento}) => {
 
     const handleShow = (e) =>{
         e.preventDefault();
@@ -17,10 +17,10 @@ const Modal = ({setShow}) => {
                         <h5 className="modal-title" id="exampleModalLongTitle">Cotización enviada correctamente!</h5>
                     </div>
                     <div className="modal-body">
-                        Ticket de cotización: XXXX-XXXX-XXXX-XXXX
+                        Ticket de cotización: <strong>{seguimiento}</strong>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-danger mx-auto" onClick={handleShow} data-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-danger mx-auto" onClick={handleShow} data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>

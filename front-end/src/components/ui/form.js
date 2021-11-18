@@ -14,7 +14,7 @@ const Form = props => {
     const local = process.env.REACT_APP_LOCAL_HOST
     const { number, addOne, removeOne } = counter(0)
 
-    const [show, setShow] = useState(false)
+    // const [show, setShow] = useState(false)
 
     const [nombre, setNombre] = useState({ nombre: '', valido: null })
     const [apellido, setApellido] = useState({ apellido: '', valido: null })
@@ -31,17 +31,23 @@ const Form = props => {
 
     const [pregunta, setPregunta] = useState('')
 
+    const [seguimiento, setSeguimiento] = useState(null)
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const contactData = { ...nombre, ...apellido, ...rut, ...telefono, ...email, ...empresa }
         const motorData = { ...rpm, ...hp, ...peso, ...eficiencia, ...voltaje}
-        axios.post(local + "/dataCotizacion", { contactData, motorData })
+        axios.post(local + "/dataCotizacion", { contactData, motorData, pregunta })
             .then((received) => {
-                const { message } = received.data
-                console.log(message)
-                setShow(true)
+                const { numeroSeg } = received.data
+                console.log(numeroSeg)
+                setSeguimiento(numeroSeg)
+                // setShow(true)
             })
-        setShow(true)
+            .catch((error) =>{
+                console.log(error)
+            })
+        // setShow(true)
     }
 
     const validateSteps = () => {
@@ -113,10 +119,7 @@ const Form = props => {
                 </button>
             </div>
 
-
-
-            { show === true ? <Modal setShow={setShow}/> : <h1> </h1>}
-
+            { seguimiento !== null ? <Modal seguimiento = {seguimiento}/> : <h1> </h1>}
 
         </div>)
 }
