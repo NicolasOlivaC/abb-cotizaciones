@@ -20,7 +20,7 @@ const MenuSelect = props => {
                     <div className="input-group mb-3">
                         <input type="text" className="form-control" value={seguimiento} onChange={handleChange} placeholder="XXXX-XXXX-XXXX-XXXX" />
                         <div className="input-group-append">
-                            <Link className="btn btn-danger" to={`/demo/${seguimiento}`}>Buscar</Link>
+                            <Link className="btn btn-danger" to={`/cotizacionSeg/${seguimiento}`}>Buscar</Link>
                         </div>
                     </div>
                     <span className="mb-3">o...</span>
