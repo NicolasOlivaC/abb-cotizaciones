@@ -62,10 +62,19 @@ body{
 .contenedor3{
     display: flex;
     justify-content: center;
+    
 }
 .navBar{
+    background-color: white;
     display:flex;
+    overflow:hidden;
     flex-direction: row;
+    top: 0;
+    width: 64%;
+    position:fixed;
+    padding-top:40px;
+    padding-bottom:13px;
+    z-index: 10;
 }
 
 .listItem{
@@ -265,3 +274,19 @@ a {
     background-color: #f6f6f6;
 }
 
+.horizontal {
+    border-right: 1px solid red;
+    padding-right: 80px;
+    padding-left: 80px;
+}
+
+.horizontal1 {
+    border-right: 1px solid red;
+    border-left: 1px solid red;
+    padding-right: 80px;
+    padding-left: 80px;
+}
+
+hr{
+    background-color: red;
+}

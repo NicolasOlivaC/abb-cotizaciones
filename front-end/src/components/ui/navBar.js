@@ -2,8 +2,9 @@
 import logo from '../../image/abb-logo.png'
 const navBar = props => {
     return (
+
         <div className="navBar">
-            <img src = {logo} alt="logo abb"/>
+            <img src={logo} alt="logo abb" />
             <ul className="listItem">
                 <li>PÁGINA PRINCIPAL</li>
                 <li>SOBRE NOSOTROS</li>
@@ -12,6 +13,8 @@ const navBar = props => {
                 <li>CONTACT CENTERS</li>
             </ul>
         </div>
+
+
     )
 }
 
