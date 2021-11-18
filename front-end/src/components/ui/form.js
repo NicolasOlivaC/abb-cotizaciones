@@ -34,8 +34,8 @@ const Form = props => {
     const handleSubmit = (e) => {
         e.preventDefault()
         const contactData = { ...nombre, ...apellido, ...rut, ...telefono, ...email, ...empresa }
-
-        axios.post(local + "/dataCotizacion", { contactData, pregunta })
+        const motorData = { ...rpm, ...hp, ...peso, ...eficiencia, ...voltaje}
+        axios.post(local + "/dataCotizacion", { contactData, motorData })
             .then((received) => {
                 const { message } = received.data
                 console.log(message)
