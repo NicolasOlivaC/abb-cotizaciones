@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 
-const TableItem = ({ indice, data }) => {
+const TableItem = React.memo(({ indice, data, setSelection }) => {
+    console.log("renderice tableItem")
 
-    console.log(data)
+    const [stateButton, setStateButton] = useState(false)
+
+    const handleState = (e) => {
+
+        if (stateButton === true) {
+            setSelection(anterior =>
+                anterior.filter(item => item !== data.catalog_number)
+            )
+            setStateButton(!stateButton);
+        }
+        else {
+            setSelection( anterior => [...anterior, data.catalog_number])
+            setStateButton(!stateButton);
+        }
+
+    }
+
     return (
         <tr>
             <th className="text-center align-middle" scope="row">{indice}</th>
@@ -25,11 +42,11 @@ const TableItem = ({ indice, data }) => {
                 </div>
             </td>
             <td className="align-middle">
-                <input className="form-check-input mx-auto contentTable " type="checkbox" value="" />
+                <input className="form-check-input mx-auto contentTable " type="checkbox" value={stateButton} onClick={handleState} />
             </td>
         </tr>
     )
-}
+})
 
 
 

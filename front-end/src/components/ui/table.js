@@ -1,7 +1,10 @@
 import React from 'react'
 import TableItem from './tableItem'
 
-const Table = ({data}) => {
+const Table = ({data, setSelection}) => {
+
+    console.log("renderice mi tabla")
+
     return (
         <table className="table table-bordered">
             <thead>
@@ -13,7 +16,7 @@ const Table = ({data}) => {
                 </tr>
             </thead>
             <tbody>
-                {data.map((item, index) => <TableItem key={index} indice={index+1} data={item}/> )}
+                {data.map((item, index) => <TableItem key={index} indice={index+1} data={item} setSelection = {setSelection}/> )}
             </tbody>
         </table>
     )

@@ -14,8 +14,6 @@ const Form = props => {
     const local = process.env.REACT_APP_LOCAL_HOST
     const { number, addOne, removeOne } = counter(0)
 
-    // const [show, setShow] = useState(false)
-
     const [nombre, setNombre] = useState({ nombre: '', valido: null })
     const [apellido, setApellido] = useState({ apellido: '', valido: null })
     const [rut, setRut] = useState({ rut: '', valido: null })
@@ -29,6 +27,8 @@ const Form = props => {
     const [eficiencia, setEficiencia] = useState({ eficiencia: '', valido: null })
     const [voltaje, setVoltaje] = useState({ voltaje: '', valido: null })
 
+    const [selection, setSelection] = useState([])
+
     const [pregunta, setPregunta] = useState('')
 
     const [seguimiento, setSeguimiento] = useState(null)
@@ -36,18 +36,16 @@ const Form = props => {
     const handleSubmit = (e) => {
         e.preventDefault()
         const contactData = { ...nombre, ...apellido, ...rut, ...telefono, ...email, ...empresa }
-        const motorData = { ...rpm, ...hp, ...peso, ...eficiencia, ...voltaje}
-        axios.post(local + "/dataCotizacion", { contactData, motorData, pregunta })
+        delete contactData.valido;
+ 
+        axios.post(local + "/dataCotizacion", { contactData, selection, pregunta })
             .then((received) => {
                 const { numeroSeg } = received.data
-                console.log(numeroSeg)
                 setSeguimiento(numeroSeg)
-                // setShow(true)
             })
             .catch((error) =>{
                 console.log(error)
             })
-        // setShow(true)
     }
 
     const validateSteps = () => {
@@ -56,16 +54,11 @@ const Form = props => {
                 addOne()
             }
             else {
-                alert("rellena los campos solicitados")
+                alert("Todos los campos son obligatorios")
             }
         }
         if (number === 1) {
-            if (rpm.valido === true && hp.valido === true && peso.valido === true && eficiencia.valido === true && voltaje.valido === true) {
-                addOne()
-            }
-            else {
-                alert("rellena los campos solicitados")
-            }
+            (selection.length >= 1 ? addOne() : alert("Debes seleccionar almenos un motor!"))
         }
     }
 
@@ -91,6 +84,7 @@ const Form = props => {
                     peso={{ peso, setPeso }}
                     eficiencia={{ eficiencia, setEficiencia }}
                     voltaje={{ voltaje, setVoltaje }}
+                    setSelection = {setSelection}
                 />
             case 2:
                 return <MotorForm3 pregunta={pregunta} setPregunta={setPregunta} />

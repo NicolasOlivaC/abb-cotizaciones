@@ -16,8 +16,7 @@ const Pm = props => {
                 console.log(error)
             })
 
-    
-        
+
     }, [])
 
     if (data) {
