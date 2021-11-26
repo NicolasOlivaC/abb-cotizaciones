@@ -5,38 +5,34 @@ const Pm = props => {
 
     const [data, setData] = useState(null)
     const params = useParams();
-    console.log(data?.message)
-    console.log(data)
+
     useEffect(() => {
         const local = process.env.REACT_APP_LOCAL_HOST
         axios.get(`${local}/obtainDataCotizacion/${params.ID}`)
             .then((received) => {
-                setTimeout(() => {
-                    setData({ ...received.data[0], ...received.data[1], answ: received.data[2] })
-                }, 1000);
+                // console.log(received)
+                setData([received.data[0], received.data[1], received.data[2]])
             })
             .catch(error => {
-                setData({message: error.response.data.error})
+                setData({ message: error.response.data.error })
             })
     }, [])
 
-    
-
-    if(data === null || data?.message) {
+    if (data === null || data?.message) {
         return (
 
             <>
                 {data === null ? <h1 className="mt-5">Loading...</h1> : <h1 className="mt-5">{data.message}</h1>}
-            </> 
+            </>
 
         )
     }
 
-    else{
+    else {
         return (
             <div className="my-5 border bg-light px-3 py-3">
-                <h5>Solicitud de cotización - Fecha de ingreso: {data?.fecha_ingreso} - Última actualización: {data?.fecha_update}</h5>
-                <h5>Estado: {data?.estado}</h5>
+                <h5>Solicitud de cotización - Fecha de ingreso: {data[0]?.fecha_ingreso} - Última actualización: {data[0]?.fecha_update}</h5>
+                <h5>Estado: {data[0]?.estado}</h5>
 
                 <div className="divisor ">
                     <div className="w-50 h-auto ">
@@ -45,23 +41,23 @@ const Pm = props => {
                             <tbody>
                                 <tr>
                                     <td className="w-25">Nombre</td>
-                                    <td className="w-25">{data?.nombre}</td>
+                                    <td className="w-25">{data[0]?.nombre}</td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Apellido</td>
-                                    <td className="w-25">{data?.apellido}</td>
+                                    <td className="w-25">{data[0]?.apellido}</td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Empresa</td>
-                                    <td className="w-25">{data?.empresa}</td>
+                                    <td className="w-25">{data[0]?.empresa}</td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Email</td>
-                                    <td className="w-25">{data?.correo}</td>
+                                    <td className="w-25">{data[0]?.correo}</td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Telefono</td>
-                                    <td className="w-25">{data?.telefono}</td>
+                                    <td className="w-25">{data[0]?.telefono}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -72,7 +68,7 @@ const Pm = props => {
                     </div>
 
                     <div className="w-50">
-                        <h4 className="mt-3 text-center">Motor Catalog Number: {data?.catalog_number} </h4>
+                        <h4 className="mt-3 text-center">Motor Catalog Number: {data[1][0]?.catalog_number} </h4>
                         <table className="table table-bordered bg-white">
                             <thead>
                                 <tr>
@@ -82,20 +78,22 @@ const Pm = props => {
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div className="contentTable">
-                                            <div>
-                                                <li >nema_frame: {data?.nema_frame} </li>
-                                                <li>Voltaje: {data?.voltag}</li>
-                                                <li>rpm: {data?.rpm}</li>
-                                                <li>hp: {data?.hp}</li>
+                                        {data[1].map((item,indice) =>
+                                            <div key = {indice} className="contentTable">
+                                                <div>
+                                                    <li >nema_frame: {item.nema_frame} </li>
+                                                    <li>Voltaje: {item.voltag}</li>
+                                                    <li>rpm: {item.rpm}</li>
+                                                    <li>hp: {item.hp}</li>
+                                                </div>
+                                                <div>
+                                                    <li>Disc_sym: {item.Dysc_sym}</li>
+                                                    <li>C dim: {item.c_dim}</li>
+                                                    <li>aprx wt: {item.aprx_wt}</li>
+                                                    <li>Full load efficiency: {item.full_load_efficiency}</li>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <li>Disc_sym: {data?.Dysc_sym}</li>
-                                                <li>C dim: {data?.c_dim}</li>
-                                                <li>aprx wt: {data?.aprx_wt}</li>
-                                                <li>Full load efficiency: {data?.full_load_efficiency}</li>
-                                            </div>
-                                        </div>
+                                        )}
                                     </td>
                                 </tr>
                             </tbody>

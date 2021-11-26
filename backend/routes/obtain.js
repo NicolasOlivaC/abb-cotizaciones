@@ -43,9 +43,6 @@ router.get('/obtainDataCotizacion/:ID', async (req, res) => {
     const dataCotizacion = await mysql.query('SELECT * FROM infoCotizacion WHERE id_cotizacion = ?', req.params.ID);
     const dataDetail = await mysql.query("select * from obtainDetail where id_cotizacion = ?", req.params.ID);
     const dataIndicacion = await mysql.query(query, req.params.ID);
-    console.log(dataCotizacion)
-    console.log(dataDetail)
-    console.log(dataIndicacion)
 
     if (dataCotizacion.length === 0 || dataDetail.length == 0) {
       throw new Error();
@@ -55,7 +52,7 @@ router.get('/obtainDataCotizacion/:ID', async (req, res) => {
     }
 
   }
-  
+
   catch (error) {
 
     res.status(404).json({
