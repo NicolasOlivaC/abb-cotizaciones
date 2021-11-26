@@ -5,21 +5,34 @@ const Pm = props => {
 
     const [data, setData] = useState(null)
     const params = useParams();
+    console.log(data?.message)
+    console.log(data)
     useEffect(() => {
         const local = process.env.REACT_APP_LOCAL_HOST
         axios.get(`${local}/obtainDataCotizacion/${params.ID}`)
             .then((received) => {
-                  setData({ ...received.data[0], ...received.data[1], answ: received.data[2] })
+                setTimeout(() => {
+                    setData({ ...received.data[0], ...received.data[1], answ: received.data[2] })
+                }, 1000);
             })
             .catch(error => {
-                setData(false)
-                console.log(error)
+                setData({message: error.response.data.error})
             })
-
-
     }, [])
 
-    if (data) {
+    
+
+    if(data === null || data?.message) {
+        return (
+
+            <>
+                {data === null ? <h1 className="mt-5">Loading...</h1> : <h1 className="mt-5">{data.message}</h1>}
+            </> 
+
+        )
+    }
+
+    else{
         return (
             <div className="my-5 border bg-light px-3 py-3">
                 <h5>Solicitud de cotización - Fecha de ingreso: {data?.fecha_ingreso} - Última actualización: {data?.fecha_update}</h5>
@@ -96,7 +109,7 @@ const Pm = props => {
                     <h4 className="mt-5 ">Indicaciones de funcionalidad</h4>
                     <div className="divisor2 mb-3 px-3 py-3 bg-white">
 
-                        {data.answ ? data.answ.map((elemento, indice) =>
+                        {data?.answ ? data?.answ.map((elemento, indice) =>
                             <div key={indice}>
                                 <span><strong>{elemento.por} - {elemento.fecha} </strong></span>
                                 <p>{elemento.pregunta}</p>
@@ -112,16 +125,6 @@ const Pm = props => {
                 </div>
 
             </div>
-        )
-    }
-
-    else {
-        return (
-
-            <>
-                {data === null ? <h1>Loading...</h1> : <h1>No se encuentra la cotizacion: {params.ID}</h1>}
-            </> 
-
         )
     }
 

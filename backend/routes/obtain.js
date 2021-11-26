@@ -34,39 +34,35 @@ router.post('/dataCotizacion', (req, res) => {
 })
 
 
-router.get('/obtainDataCotizacion/:ID', (req, res) => {
-  const query = `SELECT nombre, apellido, empresa, telefono, correo, 
-                 DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha_ingreso, DATE_FORMAT(fecha_update,'%d/%m/%Y %H:%i:%s') as fecha_update, estado, 
-                 precio_final, catalog_number,
-                 Rut_cotizante FROM cotizacion, cotizante, detalle
-                 WHERE cotizacion.id_cotizacion = ${req.params.ID} 
-                 AND Rut_cotizante = cotizante.id_cotizante
-                 AND detalle.id_cotizacion = cotizacion.id_cotizacion`;
+router.get('/obtainDataCotizacion/:ID', async (req, res) => {
 
-  const query2 = "SELECT * FROM motores WHERE catalog_number = ?"
+  const query = `SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha, pregunta FROM indicaciones WHERE id_cotizacion = ? ORDER BY fecha`
 
-  mysql.query(query, (error, data1) => {
-    if (error || data1[0] === undefined) {
-      res.json([{ message: "error1" }])
+  try {
+
+    const dataCotizacion = await mysql.query('SELECT * FROM infoCotizacion WHERE id_cotizacion = ?', req.params.ID);
+    const dataDetail = await mysql.query("select * from obtainDetail where id_cotizacion = ?", req.params.ID);
+    const dataIndicacion = await mysql.query(query, req.params.ID);
+    console.log(dataCotizacion)
+    console.log(dataDetail)
+    console.log(dataIndicacion)
+
+    if (dataCotizacion.length === 0 || dataDetail.length == 0) {
+      throw new Error();
     }
-    else {
-      mysql.query(query2, data1[0].catalog_number, (error, data2) => {
-        if (error || data2[0] === undefined) {
-          res.json([{ message: "error2" }])
-        }
-        else {
-          mysql.query(`SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha, pregunta FROM indicaciones WHERE id_cotizacion = ${req.params.ID} ORDER BY fecha`, (error, data3) => {
-            if (data3[0] === undefined) {
-              res.json([...data1, data2[0]])
-            }
-            else {
-              res.json([...data1, data2[0], data3])
-            }
-          })
-        }
-      })
+    else{
+      res.json([...dataCotizacion, dataDetail, dataIndicacion])
     }
-  })
+
+  }
+  
+  catch (error) {
+
+    res.status(404).json({
+      title: "Cotización no encontrada",
+      error: `No se encuentra la cotización correspondiente a la ID ${req.params.ID}`
+    });
+  }
 })
 
 
