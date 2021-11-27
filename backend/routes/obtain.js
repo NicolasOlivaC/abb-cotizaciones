@@ -34,15 +34,17 @@ router.post('/dataCotizacion', (req, res) => {
 })
 
 
-router.get('/obtainDataCotizacion/:ID', async (req, res) => {
+router.get('/obtainDataCotizacion/', async (req, res) => {
+
+  const ID = req.query.ID
 
   const query = `SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha, pregunta FROM indicaciones WHERE id_cotizacion = ? ORDER BY fecha`
 
   try {
 
-    const dataCotizacion = await mysql.query('SELECT * FROM infoCotizacion WHERE id_cotizacion = ?', req.params.ID);
-    const dataDetail = await mysql.query("select * from obtainDetail where id_cotizacion = ?", req.params.ID);
-    const dataIndicacion = await mysql.query(query, req.params.ID);
+    const dataCotizacion = await mysql.query('SELECT * FROM infoCotizacion WHERE id_cotizacion = ?', ID);
+    const dataDetail = await mysql.query("select * from obtainDetail where id_cotizacion = ?", ID);
+    const dataIndicacion = await mysql.query(query, ID);
 
     if (dataCotizacion.length === 0 || dataDetail.length == 0) {
       throw new Error();
@@ -57,7 +59,7 @@ router.get('/obtainDataCotizacion/:ID', async (req, res) => {
 
     res.status(404).json({
       title: "Cotización no encontrada",
-      error: `No se encuentra la cotización correspondiente a la ID ${req.params.ID}`
+      error: `No se encuentra la cotización correspondiente a la ID ${ID}`
     });
   }
 })

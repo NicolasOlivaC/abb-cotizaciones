@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from "react-router-dom";
+import ResponseInput from '../ui/responseInput';
+import { changeCotizationStatus, obtainCotizationData } from '../../helpers/funcionality';
+
 const Pm = props => {
+    console.log("renderice handlePM")
 
     const [data, setData] = useState(null)
     const params = useParams();
 
     useEffect(() => {
-        const local = process.env.REACT_APP_LOCAL_HOST
-        axios.get(`${local}/obtainDataCotizacion/${params.ID}`)
-            .then((received) => {
-                // console.log(received)
-                setData([received.data[0], received.data[1], received.data[2]])
-            })
-            .catch(error => {
-                setData({ message: error.response.data.error })
-            })
+        obtainCotizationData(setData, params.ID)
     }, [])
 
     if (data === null || data?.message) {
@@ -30,8 +25,8 @@ const Pm = props => {
 
     else {
         return (
-            <div className="my-5 border bg-light px-3 py-3">
-                <h5>Solicitud de cotización - Fecha de ingreso: {data[0]?.fecha_ingreso} - Última actualización: {data[0]?.fecha_update}</h5>
+            <div className="my-5 border bg-light px-3">
+                <h5 className="mt-5">Solicitud de cotización - Fecha de ingreso: {data[0]?.fecha_ingreso} - Última actualización: {data[0]?.fecha_update}</h5>
                 <h5>Estado: {data[0]?.estado}</h5>
 
                 <div className="divisor ">
@@ -62,8 +57,8 @@ const Pm = props => {
                             </tbody>
                         </table>
                         <div className="mt-5 d-flex justify-content-center">
-                            <button className="btn btn-success mx-3">Aceptar</button>
-                            <button className="btn btn-danger mx-3">Rechazar</button>
+                            <button className="btn btn-success mx-3" onClick={() => changeCotizationStatus("aceptar")}>Aceptar</button>
+                            <button className="btn btn-danger mx-3" onClick={() => changeCotizationStatus("rechazar")}>Rechazar</button>
                         </div>
                     </div>
 
@@ -78,8 +73,8 @@ const Pm = props => {
                             <tbody>
                                 <tr>
                                     <td>
-                                        {data[1].map((item,indice) =>
-                                            <div key = {indice} className="contentTable">
+                                        {data[1].map((item, indice) =>
+                                            <div key={indice} className="contentTable">
                                                 <div>
                                                     <li >nema_frame: {item.nema_frame} </li>
                                                     <li>Voltaje: {item.voltag}</li>
@@ -105,9 +100,9 @@ const Pm = props => {
 
                 <div>
                     <h4 className="mt-5 ">Indicaciones de funcionalidad</h4>
-                    <div className="divisor2 mb-3 px-3 py-3 bg-white">
+                    <div className="divisor2 mb-3 px-3 pt-3 bg-white">
 
-                        {data?.answ ? data?.answ.map((elemento, indice) =>
+                        {(data[2].length > 0) ? data[2].map((elemento, indice) =>
                             <div key={indice}>
                                 <span><strong>{elemento.por} - {elemento.fecha} </strong></span>
                                 <p>{elemento.pregunta}</p>
@@ -115,11 +110,10 @@ const Pm = props => {
 
                             : <h1 className="text-center"> Esta cotización no cuenta con preguntas de funcionalidad</h1>
                         }
-                    </div>
-                    <div className="d-flex">
-                        <button className="btn btn-danger mx-auto">Responder</button>
-                    </div>
 
+                        <ResponseInput nombre={"Eduardo Mena - PM"}/>
+
+                    </div>
                 </div>
 
             </div>

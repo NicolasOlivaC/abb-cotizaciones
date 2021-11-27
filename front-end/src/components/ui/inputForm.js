@@ -33,7 +33,8 @@ const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, se
     return (
         <>
             <div className="form-group">
-                <label className="mx-auto">{inputTittle}</label>
+                { inputTittle ? <label className="mx-auto">{inputTittle}</label> : null}
+
                 <input
                     className="form-control mx-auto"
                     id="input"
