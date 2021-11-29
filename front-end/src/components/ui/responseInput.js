@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import Input from '../ui/inputForm'
 import { addFuncionalityResponse } from '../../helpers/funcionality'
+import { useParams } from "react-router-dom";
 
 const ResponseInput = ({ nombre }) => {
+
+    const { ID } = useParams();
 
     const [input, setInput] = useState({ pregunta: '', valido: false })
 
     return (
-        <div>
+        <div >
             <span className="align-items-center"><strong>{nombre}</strong></span>
             <div className="mt-1">
                 <Input
@@ -22,7 +25,14 @@ const ResponseInput = ({ nombre }) => {
             </div>
             
             <div className="d-flex">
-                <button className="btn btn-danger mx-auto" onClick={() => addFuncionalityResponse(input)}>Agregar comentario</button>
+                <button 
+                    className="btn btn-danger mx-auto" 
+                    onClick={ () => {
+                        addFuncionalityResponse(input.pregunta, ID, "Eduardo Mena - PM")
+                        setInput({ pregunta: '', valido: false })
+                    }}
+    
+                >Agregar comentario</button>
             </div>
         </div>
     )

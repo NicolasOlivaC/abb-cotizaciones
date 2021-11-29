@@ -2,22 +2,23 @@ import React from 'react'
 import ResponseInput from './responseInput'
 
 const FuncionalityChat = ({ data }) => {
+    console.log("renderice FuncionalityChat")
 
-    console.log(data)
 
     if (data.length > 0) {
         return (
             <div className="mt-3">
                 <h4 className="mt-3 ">Indicaciones de funcionalidad</h4>
-                <div className="divisor2 mb-3 px-3 pt-3 bg-white">
+                <div className="divisor2 mb-3 px-3 pt-3 pb-2 bg-white" id="myPregunta">
                     {data.map((elemento, indice) =>
                         <div key={indice}>
                             <span><strong>{elemento.por} - {elemento.fecha} </strong></span>
                             <p>{elemento.pregunta}</p>
                         </div>)
                     }
-                    < ResponseInput nombre={"Eduardo Mena - PM"} />
+
                 </div>
+                < ResponseInput nombre={"Eduardo Mena - PM"} />
             </div>
         )
     }

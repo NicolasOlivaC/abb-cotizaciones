@@ -21,8 +21,8 @@ router.post('/dataMotor', (req, res) => {
   const myData = val(req.body)
 
   var myString = '';
-  for(let i = 0; i < myData.length; i++) {
-    if (i === 0){
+  for (let i = 0; i < myData.length; i++) {
+    if (i === 0) {
       myString += `${myData[i][0]} = '${myData[i][1]}'`
     }
     else {
@@ -31,7 +31,6 @@ router.post('/dataMotor', (req, res) => {
   }
 
   mysql.query(`SELECT * FROM motores WHERE ${myString} `, (error, data) => {
-    console.log(data)
     if (error) {
       console.log(error)
       res.json(error)
@@ -43,44 +42,75 @@ router.post('/dataMotor', (req, res) => {
 })
 
 
-router.post('/dataCotizacion', async(req, res) => {
+router.post('/dataCotizacion', async (req, res) => {
   const data = req.body;
   const { contactData, selection, pregunta } = data;
-   console.log(pregunta)
+
   try {
-    console.log(" ")
-
-    const transaccion = await mysql.beginTransaction()
+    await mysql.beginTransaction()
     const rut = await mysql.query('SELECT * FROM cotizante WHERE id_cotizante = ?', [contactData.rut])
-
-    if (rut.length === 0){
-      const dataCotizante = await mysql.query('INSERT INTO cotizante set id_cotizante = ?, nombre = ?, apellido = ?, empresa = ?, correo = ?, telefono = ? ', [contactData.rut, contactData.nombre, contactData.apellido, contactData.empresa, contactData.correo, contactData.telefono]);
-      const dataCotizacion = await mysql.query('INSERT INTO cotizacion set estado = ?, Rut_cotizante = ?',["Nuevo", contactData.rut] )
-      for (let i = 0; i < selection.length; i++){ 
-        console.log(`${dataCotizacion.insertId} ${selection[i]}`)
-        await mysql.query('INSERT INTO detalle set id_descuento = ?,id_cotizacion = ?, catalog_number = ?', [1,dataCotizacion.insertId, selection[i]])
-      }
-      
-      const dataIndicacion = await mysql.query('INSERT INTO indicaciones set pregunta = ?, id_cotizacion = ?', [pregunta, dataCotizacion.insertId])
-      const commit = await mysql.commit()
-      console.log(commit)
-
+    if (rut.length === 0) {
+      mysql.query('INSERT INTO cotizante set id_cotizante = ?, nombre = ?, apellido = ?, empresa = ?, correo = ?, telefono = ? ', [contactData.rut, contactData.nombre, contactData.apellido, contactData.empresa, contactData.correo, contactData.telefono]);
     }
-
+    const dataCotizacion = await mysql.query('INSERT INTO cotizacion set estado = ?, Rut_cotizante = ?', ["Nuevo", contactData.rut])
+    for (let i = 0; i < selection.length; i++) {
+      await mysql.query('INSERT INTO detalle set id_descuento = ?,id_cotizacion = ?, catalog_number = ?', [1, dataCotizacion.insertId, selection[i]])
+    }
+    await mysql.query('INSERT INTO indicaciones set pregunta = ?, id_cotizacion = ?, por = ?', [pregunta, dataCotizacion.insertId, contactData.nombre])
+    await mysql.commit()
     res.json({ numeroSeg: "este es el ticket de cotizacion" })
   }
+
   catch (error) {
-    const rollback = await mysql.rollback()
+    await mysql.rollback()
     console.log(error)
     res.status(404).json({
-      title: "Cotización no encontrada",
-      error: `No se encuentra la cotización correspondiente a la ID`
+      title: 'Error al ingresar la cotización',
+      error: 'No se pudo ingresar la cotización, porfavor intentalo nuevamente'
+    });
+  }
+})
+
+router.post('/changeStatusCotizacion', (req, res) => {
+  const { choose, ID } = req.body;
+  const options = ["Aceptado", "Rechazado"]
+  if (choose === 0 || choose === 1) {
+    mysql.query('UPDATE COTIZACION SET estado = ? WHERE id_cotizacion = ?', [options[choose], ID], (error, data) => {
+      if (error) {
+        res.status(404).json({
+          title: "Estado no cambiado",
+          error: `Hubo un error al intentar cambiar el estado de la cotización ${ID}`
+        });
+      }
+      else {
+        res.json({message: "Estado cambiado correctamente", nuevoEstado: options[choose]})
+      }
+    })
+  }
+
+  else {
+    res.status(404).json({
+      title: "Mal input",
+      error: `Uno o varios de los input ingresados son incorrectos`
     });
   }
 
+})
 
-  
+router.post('/addFuncionality', async (req, res) =>{
+  const {funcionality, ID, por} = req.body
+  try{
+    const inserted = await mysql.query('INSERT INTO indicaciones SET pregunta = ?, id_cotizacion = ?, por = ? ', [funcionality, ID, por])
+    const dataSelect = await mysql.query(`SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha_ingreso, pregunta FROM indicaciones WHERE id_indicaciones = ?`, [inserted.insertId])
+    res.json({dataSelect})
+  }
 
+  catch (error) {
+    res.status(404).json({
+      title: "Error",
+      error: `Ocurrió un problema al ingresar la pregunta de funcionalidad`
+    });
+  }
 })
 
 
@@ -99,7 +129,7 @@ router.get('/obtainDataCotizacion/', async (req, res) => {
     if (dataCotizacion.length === 0 || dataDetail.length == 0) {
       throw new Error();
     }
-    else{
+    else {
       res.json([...dataCotizacion, dataDetail, dataIndicacion])
     }
 
