@@ -71,7 +71,7 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
 
                     <Input
                         inputTittle="Peso aproximado"
-                        name="peso"
+                        name="full_load_efficiency"
                         placeholderText="xx"
                         formData={peso.peso}
                         setFormData={peso.setPeso}
@@ -82,7 +82,7 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
 
                     <Input
                         inputTittle="Eficiencia de carga maxima"
-                        name="eficiencia"
+                        name="aprx_wt"
                         placeholderText="xx"
                         formData={eficiencia.eficiencia}
                         setFormData={eficiencia.setEficiencia}
@@ -93,7 +93,7 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
 
                     <Input
                         inputTittle="Voltaje"
-                        name="voltaje"
+                        name="voltage"
                         placeholderText="xx"
                         formData={voltaje.voltaje}
                         setFormData={voltaje.setVoltaje}

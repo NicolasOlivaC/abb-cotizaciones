@@ -23,9 +23,9 @@ const Form = props => {
 
     const [rpm, setRpm] = useState({ rpm: '', valido: null })
     const [hp, setHp] = useState({ hp: '', valido: null })
-    const [peso, setPeso] = useState({ peso: '', valido: null })
-    const [eficiencia, setEficiencia] = useState({ eficiencia: '', valido: null })
-    const [voltaje, setVoltaje] = useState({ voltaje: '', valido: null })
+    const [peso, setPeso] = useState({ aprx_wt: '', valido: null })
+    const [eficiencia, setEficiencia] = useState({ full_load_efficiency: '', valido: null })
+    const [voltaje, setVoltaje] = useState({ voltage: '', valido: null })
 
     const [selection, setSelection] = useState([])
 
