@@ -1,9 +1,8 @@
 import React from 'react'
 import ResponseInput from './responseInput'
 
-const FuncionalityChat = ({ data }) => {
+const FuncionalityChat = ({ data, nombre }) => {
     console.log("renderice FuncionalityChat")
-
 
     if (data.length > 0) {
         return (
@@ -18,7 +17,7 @@ const FuncionalityChat = ({ data }) => {
                     }
 
                 </div>
-                < ResponseInput nombre={"Eduardo Mena - PM"} />
+                < ResponseInput nombre={nombre} />
             </div>
         )
     }

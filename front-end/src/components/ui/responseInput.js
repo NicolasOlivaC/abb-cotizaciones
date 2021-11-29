@@ -28,7 +28,7 @@ const ResponseInput = ({ nombre }) => {
                 <button 
                     className="btn btn-danger mx-auto" 
                     onClick={ () => {
-                        addFuncionalityResponse(input.pregunta, ID, "Eduardo Mena - PM")
+                        addFuncionalityResponse(input.pregunta, ID, nombre)
                         setInput({ pregunta: '', valido: false })
                     }}
     

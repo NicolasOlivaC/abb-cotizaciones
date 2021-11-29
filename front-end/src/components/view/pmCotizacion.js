@@ -5,6 +5,7 @@ import CotizacionPrice from '../ui/cotizacionPrice';
 import { obtainCotizationData } from '../../helpers/funcionality';
 import TableCaractMotor from '../ui/tableCaractMotor';
 import ContactInformation from '../ui/contactInformation';
+import ButtonChangeStatus from '../ui/buttonChangeStatus';
 
 
 const Pm = props => {
@@ -19,7 +20,7 @@ const Pm = props => {
         switch (selection) {
             case 1:
                 return (
-                    <FuncionalityChat data={data[2]} />
+                    <FuncionalityChat data={data[2]} nombre="Eduardo Mena - PM" />
                 )
             case 2:
                 return (
@@ -52,6 +53,7 @@ const Pm = props => {
                 <div className="divisor ">
                     <div className="w-50 h-auto ">
                         <ContactInformation data={data[0]} ID={ID} />
+                        <ButtonChangeStatus ID = {ID}/>
                     </div>
                     <div className="w-50">
                         <TableCaractMotor data={data[1]} />

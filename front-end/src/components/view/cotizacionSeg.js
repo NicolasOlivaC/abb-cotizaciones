@@ -1,48 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, Link } from "react-router-dom";
+import { obtainCotizationData } from '../../helpers/funcionality';
+import ContactInformation from '../ui/contactInformation';
+import FuncionalityChat from '../ui/funcionalityChat';
+import TableCaractMotor from '../ui/tableCaractMotor';
 
 const CotizacionSeg = props => {
 
-    const [data, setData] = useState([])
+    const [data, setData] = useState(null)
     const [choice, setChoice] = useState(0)
-    const params = useParams();
-    // useEffect(() => {
-    //     const local = process.env.REACT_APP_LOCAL_HOST
-    //     axios.get(`${local}/obtainDataCotizacion/${params.ID}`)
-    //         .then((received) => {
-    //               setData({ ...received.data[0], ...received.data[1], answ: received.data[2] })
-    //         })
-    //         .catch(error => {
-    //             setData(false)
-    //             console.log(error)
-    //         })
+    const { ID } = useParams();
+    console.log(data)
 
-
-
-    // }, [])
-
+    useEffect(() => {
+        obtainCotizationData(setData, ID)
+    }, [])
+    
     const handleSelect = () => {
         switch (choice) {
             case 0:
                 return (
-                    <div>
-                        <h4 className="mt-3 ">Indicaciones de funcionalidad</h4>
-                        <div className="divisor2 mb-3 px-3 py-3 bg-white">
-
-                            {data.answ ? data.answ.map((elemento, indice) =>
-                                <div key={indice}>
-                                    <span><strong>{elemento.por} - {elemento.fecha} </strong></span>
-                                    <p>{elemento.pregunta}</p>
-                                </div>)
-
-                                : <h1 className="text-center"> Sin preguntas de funcionalidad </h1>
-                            }
-                        </div>
-                        <div className="d-flex">
-                            <button className="btn btn-danger mx-auto">Nueva pregunta</button>
-                        </div>
-                    </div>
+                    <FuncionalityChat data={data[2]} nombre={data[0].nombre} />
                 )
             case 1:
                 return (<h1>nothing here</h1>)
@@ -69,7 +47,7 @@ const CotizacionSeg = props => {
                 <div className="d-flex justify-content-center mt-3 ">
                     <div className="d-flex flex-column text-center horizontal1" >
                         <label> <strong>Número de seguimiento</strong> </label>
-                        <label> {params.ID} </label>
+                        <label> {ID} </label>
                     </div>
 
                     {/* <div className="d-flex flex-column text-center hello">
@@ -79,12 +57,12 @@ const CotizacionSeg = props => {
 
                     <div className="d-flex flex-column text-center horizontal">
                         <label> <strong>Fecha de ingreso</strong> </label>
-                        <label> xxxxxx </label>
+                        <label> {data[0].fecha_ingreso} </label>
                     </div>
 
                     <div className="d-flex flex-column text-center horizontal">
                         <label> <strong>Última actualización</strong> </label>
-                        <label> xxxxxx </label>
+                        <label> {data[0].fecha_update} </label>
                     </div>
 
                 </div>
@@ -100,71 +78,17 @@ const CotizacionSeg = props => {
                 <div className="divisor mt-2">
 
                     <div className="w-50 h-auto ">
-                        <h4 className="mt-3 text-center">Datos personales</h4>
-                        <table className="table table-bordered bg-white">
-                            <tbody>
-                                <tr>
-                                    <td className="w-25">Nombre</td>
-                                    <td className="w-25">{data?.nombre}</td>
-                                </tr>
-                                <tr>
-                                    <td className="w-25">Apellido</td>
-                                    <td className="w-25">{data?.apellido}</td>
-                                </tr>
-                                {/* <tr>
-                                    <td className="w-25">Empresa</td>
-                                    <td className="w-25">{data?.empresa}</td>
-                                </tr> */}
-                                {/* <tr>
-                                    <td className="w-25">Email</td>
-                                    <td className="w-25">{data?.correo}</td>
-                                </tr> */}
-                                {/* <tr>
-                                    <td className="w-25">Telefono</td>
-                                    <td className="w-25">{data?.telefono}</td>
-                                </tr> */}
-                            </tbody>
-                        </table>
-
+                        <ContactInformation data={data[0]} />
                     </div>
 
                     <div className="w-50">
-                        <h4 className="mt-3 text-center">Motor Catalog Number: {data?.catalog_number} </h4>
-                        <table className="table table-bordered bg-white">
-                            <thead>
-                                <tr>
-                                    <td className="text-center align-middle">Caracteristicas</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div className="contentTable">
-                                            <div>
-                                                <li >nema_frame: {data?.nema_frame} </li>
-                                                <li>Voltaje: {data?.voltag}</li>
-                                                <li>rpm: {data?.rpm}</li>
-                                                <li>hp: {data?.hp}</li>
-                                            </div>
-                                            <div>
-                                                <li>Disc_sym: {data?.Dysc_sym}</li>
-                                                <li>C dim: {data?.c_dim}</li>
-                                                <li>aprx wt: {data?.aprx_wt}</li>
-                                                <li>Full load efficiency: {data?.full_load_efficiency}</li>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <TableCaractMotor data={data[1]} />
                     </div>
                 </div>
 
 
                 <hr className="mt-5" />
-                <div >
-                    <h4>   Antecedentes</h4>
-                </div>
+
                 <div className="mt-3 d-flex justify-content-row gap-4 ">
 
                     <div className="form-check">
@@ -188,7 +112,7 @@ const CotizacionSeg = props => {
         return (
 
             <>
-                {data === null ? <h1>Loading...</h1> : <h1>No se encuentra la cotizacion: {params.ID}</h1>}
+                {data === null ? <h1>Loading...</h1> : <h1>No se encuentra la cotizacion: {ID}</h1>}
             </>
 
         )
