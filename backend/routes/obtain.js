@@ -10,10 +10,28 @@ router.get('/', function (req, res, next) {
 module.exports = router;
 
 router.post('/dataMotor', (req, res) => {
-  const data = req.body;
-  const { rpm, hp, peso, eficiencia, voltaje } = data
-  console.log(rpm, hp, peso, eficiencia, voltaje)
-  mysql.query("SELECT * FROM motores", (error, data) => {
+  const val = (data) => {
+    const arr = Object.entries(data);
+    const arr2 = arr.filter(elemento => {
+      return elemento[1].length > 0
+    })
+    return arr2
+  }
+
+  const myData = val(req.body)
+
+  var myString = '';
+  for(let i = 0; i < myData.length; i++) {
+    if (i === 0){
+      myString += `${myData[i][0]} = '${myData[i][1]}'`
+    }
+    else {
+      myString += ` AND ${myData[i][0]} = '${myData[i][1]}'`
+    }
+  }
+
+  mysql.query(`SELECT * FROM motores WHERE ${myString} `, (error, data) => {
+    console.log(data)
     if (error) {
       console.log(error)
       res.json(error)
