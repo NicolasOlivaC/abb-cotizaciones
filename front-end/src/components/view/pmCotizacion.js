@@ -1,17 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import ResponseInput from '../ui/responseInput';
+import FuncionalityChat from '../../components/ui/funcionalityChat';
+import CotizacionPrice from '../ui/cotizacionPrice';
 import { changeCotizationStatus, obtainCotizationData } from '../../helpers/funcionality';
+
 
 const Pm = props => {
     console.log("renderice handlePM")
 
     const [data, setData] = useState(null)
+    const [selection, setSelection] = useState(1)
     const params = useParams();
+
+
+    const handleSelection = () => {
+
+        switch (selection) {
+            case 1:
+
+                return (
+                    <FuncionalityChat data={data[2]} />
+                )
+            case 2:
+                return (
+                    <CotizacionPrice data={data[1]} />
+                )
+            default:
+                break;
+        }
+    }
 
     useEffect(() => {
         obtainCotizationData(setData, params.ID)
     }, [])
+
+
 
     if (data === null || data?.message) {
         return (
@@ -98,23 +121,21 @@ const Pm = props => {
 
                 <hr className="mt-5" />
 
-                <div>
-                    <h4 className="mt-5 ">Indicaciones de funcionalidad</h4>
-                    <div className="divisor2 mb-3 px-3 pt-3 bg-white">
 
-                        {(data[2].length > 0) ? data[2].map((elemento, indice) =>
-                            <div key={indice}>
-                                <span><strong>{elemento.por} - {elemento.fecha} </strong></span>
-                                <p>{elemento.pregunta}</p>
-                            </div>)
 
-                            : <h1 className="text-center"> Esta cotización no cuenta con preguntas de funcionalidad</h1>
-                        }
-
-                        <ResponseInput nombre={"Eduardo Mena - PM"}/>
-
+                <div className=" mt-3 border w-50 bg-white py-2 px-2 d-flex justify-content-row gap-4 ">
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" onClick={() => setSelection(1)} name="flexRadioDefault" defaultChecked />
+                        <label className="form-check-label" >Indicaciones de funcionalidad</label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" onClick={() => setSelection(2)} name="flexRadioDefault" />
+                        <label className="form-check-label">Asignar descuentos a la cotización</label>
                     </div>
                 </div>
+
+                {handleSelection()}
+
 
             </div>
         )

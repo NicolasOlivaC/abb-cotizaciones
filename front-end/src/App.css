@@ -291,3 +291,10 @@ a {
 hr{
     background-color: red;
 }
+
+.adjust {
+    position: relative;
+    right: 18px;
+    top:11px;
+    color:rgb(197, 196, 196);
+}
