@@ -9,6 +9,7 @@ import CotizacionSeg from './components/view/cotizacionSeg';
 import MenuSelect from './components/ui/menuSelect'
 import PmCotizacion from './components/view/pmCotizacion'
 import TablePrelCot from './components/ui/tablePrelCot'
+import Footer from './components/ui/footer';
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
 
 
         {/* <Form /> */}
+
+        <Footer />
 
 
       </div>
