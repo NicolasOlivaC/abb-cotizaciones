@@ -37,13 +37,13 @@ const Form = props => {
         e.preventDefault()
         const contactData = { ...nombre, ...apellido, ...rut, ...telefono, ...email, ...empresa }
         delete contactData.valido;
- 
+
         axios.post(local + "/dataCotizacion", { contactData, selection, pregunta })
             .then((received) => {
                 const { numeroSeg } = received.data
                 setSeguimiento(numeroSeg)
             })
-            .catch((error) =>{
+            .catch((error) => {
                 console.log(error)
             })
     }
@@ -84,7 +84,7 @@ const Form = props => {
                     peso={{ peso, setPeso }}
                     eficiencia={{ eficiencia, setEficiencia }}
                     voltaje={{ voltaje, setVoltaje }}
-                    setSelection = {setSelection}
+                    setSelection={setSelection}
                 />
             case 2:
                 return <MotorForm3 pregunta={pregunta} setPregunta={setPregunta} />
@@ -96,7 +96,10 @@ const Form = props => {
     return (
         <div className="mt-5">
 
-            {handleComponentForm()}
+            <div className="mt-3">
+                {handleComponentForm()}
+            </div>
+
 
             <div className="contenedor3 my-5" id="flechas">
                 <button
@@ -113,7 +116,7 @@ const Form = props => {
                 </button>
             </div>
 
-            { seguimiento !== null ? <Modal seguimiento = {seguimiento}/> : <h1> </h1>}
+            {seguimiento !== null ? <Modal seguimiento={seguimiento} /> : <h1> </h1>}
 
         </div>)
 }

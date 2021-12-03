@@ -17,26 +17,28 @@ function App() {
 
   return (
     <>
+      <div className="generalContainer">
+        <div className="contenedor" >
 
-      <div className="contenedor" >
-
-        <Navbar />
-        <Routes>
-          <Route index exact path="/" element={<MenuSelect />} />
-          <Route exact path="/cotizacion" element={<Form />} />
-          <Route exact path="/cotizacionSeg/:ID" element={<CotizacionSeg />} />
-          <Route exact path="/handlePM" element={<TablePrelCot />} />
-          <Route exact path="/handlePM/:ID" element={<PmCotizacion />} />
-          <Route path="*" element={<h1>La pagina solicitada no existe</h1>} />
-        </Routes>
-
-
-        {/* <Form /> */}
-
-        <Footer />
+          <Navbar />
+          <Routes>
+            <Route index exact path="/" element={<MenuSelect />} />
+            <Route exact path="/cotizacion" element={<Form />} />
+            <Route exact path="/cotizacionSeg/:ID" element={<CotizacionSeg />} />
+            <Route exact path="/handlePM" element={<TablePrelCot />} />
+            <Route exact path="/handlePM/:ID" element={<PmCotizacion />} />
+            <Route path="*" element={<h1>La pagina solicitada no existe</h1>} />
+          </Routes>
 
 
+          {/* <Form /> */}
+
+          <Footer />
+
+
+        </div>
       </div>
+
     </>
   );
 }

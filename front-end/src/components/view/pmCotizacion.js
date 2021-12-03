@@ -48,7 +48,7 @@ const Pm = props => {
     else {
         return (
             <div className="my-5 border bg-light px-3">
-                <h5 className="mt-5">Solicitud de cotización - Fecha de ingreso: {data[0]?.fecha_ingreso} - Última actualización: 29/11/2021 21:03:20</h5>
+                <h5 className="mt-5">Solicitud de cotización - Fecha de ingreso: {data[0]?.fecha_ingreso} - Última actualización: {data[0].fecha_update}</h5>
                 <h5 id="myEstado">Estado: {data[0]?.estado}</h5>
                 <div className="divisor ">
                     <div className="w-50 h-auto ">

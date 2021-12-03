@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link as button } from "react-router-dom";
 import { obtainCotizationData } from '../../helpers/funcionality';
 import ContactInformation from '../ui/contactInformation';
 import FuncionalityChat from '../ui/funcionalityChat';
@@ -10,12 +10,18 @@ const CotizacionSeg = props => {
     const [data, setData] = useState(null)
     const [choice, setChoice] = useState(0)
     const { ID } = useParams();
-    console.log(data)
 
     useEffect(() => {
         obtainCotizationData(setData, ID)
     }, [])
-    
+
+    const [myinput, setInput] = useState('');
+    console.log(myinput)
+
+    const handleChange = (e) => {
+        setInput(e.target.value)
+    }
+
     const handleSelect = () => {
         switch (choice) {
             case 0:
@@ -29,16 +35,17 @@ const CotizacionSeg = props => {
                 break;
         }
     }
+    console.log(data)
 
-    if (data) {
+    if (data !== null && data !== "error") {
         return (<>
 
             <div className="d-flex flex-column mx-auto w-50 mt-5 ">
                 <label className="text-center mt-4"><strong>¿Necesitas consultar otra cotización?, proporcionanos el número!</strong></label>
                 <div className="input-group mt-1">
-                    <input type="text" className="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" />
+                    <input type="text" className="form-control" value={myinput} onChange={handleChange} placeholder="XXXX-XXXX-XXXX-XXXX" />
                     <div className="input-group-append mx-2">
-                        <Link className="btn btn-danger" to={`/demo/`}>Buscar</Link>
+                        <button className="btn btn-danger" onClick={() => obtainCotizationData(setData, myinput)}>Buscar</button>
                     </div>
                 </div>
             </div>
@@ -47,7 +54,7 @@ const CotizacionSeg = props => {
                 <div className="d-flex justify-content-center mt-3 ">
                     <div className="d-flex flex-column text-center horizontal1" >
                         <label> <strong>Número de seguimiento</strong> </label>
-                        <label> {ID} </label>
+                        <label> {data[0].id_cotizacion} </label>
                     </div>
 
                     {/* <div className="d-flex flex-column text-center hello">
@@ -110,10 +117,22 @@ const CotizacionSeg = props => {
 
     else {
         return (
+            <div className="mt-1 text-center">
 
-            <>
-                {data === null ? <h1>Loading...</h1> : <h1>No se encuentra la cotizacion: {ID}</h1>}
-            </>
+                <div className="d-flex flex-column mx-auto w-50 mt-5 ">
+                    <label className="text-center mt-4"><strong>¿Necesitas consultar otra cotización?, proporcionanos el número!</strong></label>
+                    <div className="input-group mt-1">
+                        <input type="text" className="form-control" value={myinput} onChange={handleChange} placeholder="XXXX-XXXX-XXXX-XXXX" />
+                        <div className="input-group-append mx-2">
+                            <button className="btn btn-danger" onClick={() => obtainCotizationData(setData, myinput)}>Buscar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="my-5">
+                    {data === null ? <h1>Loading...</h1> : <h1>No se encuentra la cotizacion asociada</h1>}
+                </div>
+            </div>
 
         )
     }

@@ -34,10 +34,11 @@ const changeCotizationStatus = (choose, ID) => {
 const obtainCotizationData = (setData, ID) => {
     axios.get(`${local}/obtainDataCotizacion`, { params: { ID: ID } })
         .then((received) => {
+            console.log(received)
             setData([received.data[0], received.data[1], received.data[2]])
         })
         .catch(error => {
-            setData({ message: error.response.data.error })
+            setData("error")
         })
 }
 

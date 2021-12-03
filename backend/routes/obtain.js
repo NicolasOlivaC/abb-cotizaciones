@@ -50,7 +50,7 @@ router.post('/dataCotizacion', async (req, res) => {
     await mysql.beginTransaction()
     const rut = await mysql.query('SELECT * FROM cotizante WHERE id_cotizante = ?', [contactData.rut])
     if (rut.length === 0) {
-      mysql.query('INSERT INTO cotizante set id_cotizante = ?, nombre = ?, apellido = ?, empresa = ?, correo = ?, telefono = ? ', [contactData.rut, contactData.nombre, contactData.apellido, contactData.empresa, contactData.correo, contactData.telefono]);
+      mysql.query('INSERT INTO cotizante set id_cotizante = ?, nombre = ?, apellido = ?, empresa = ?, correo = ?, telefono = ? ', [contactData.rut, contactData.nombre, contactData.apellido, contactData.empresa, contactData.email, contactData.telefono]);
     }
     const dataCotizacion = await mysql.query('INSERT INTO cotizacion set estado = ?, Rut_cotizante = ?', ["Nuevo", contactData.rut])
     for (let i = 0; i < selection.length; i++) {
@@ -83,7 +83,7 @@ router.post('/changeStatusCotizacion', (req, res) => {
         });
       }
       else {
-        res.json({message: "Estado cambiado correctamente", nuevoEstado: options[choose]})
+        res.json({ message: "Estado cambiado correctamente", nuevoEstado: options[choose] })
       }
     })
   }
@@ -97,15 +97,21 @@ router.post('/changeStatusCotizacion', (req, res) => {
 
 })
 
-router.post('/addFuncionality', async (req, res) =>{
-  const {funcionality, ID, por} = req.body
-  try{
-    const inserted = await mysql.query('INSERT INTO indicaciones SET pregunta = ?, id_cotizacion = ?, por = ? ', [funcionality, ID, por])
-    const dataSelect = await mysql.query(`SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha_ingreso, pregunta FROM indicaciones WHERE id_indicaciones = ?`, [inserted.insertId])
-    res.json({dataSelect})
+router.post('/addFuncionality', async (req, res) => {
+  try {
+    const { funcionality, ID, por } = req.body
+    const dateTime = new Date();
+    await mysql.beginTransaction()
+    const inserted = await mysql.query('INSERT INTO indicaciones SET pregunta = ?, fecha_ingreso = ?, id_cotizacion = ?, por = ? ', [funcionality, dateTime, ID, por]);
+    const dataUpdated = await mysql.query('UPDATE cotizacion SET fecha_update = ? WHERE id_cotizacion = ?', [dateTime, ID]);
+    const dataSelect = await mysql.query(`SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha_ingreso, pregunta FROM indicaciones WHERE id_indicaciones = ?`, [inserted.insertId]);
+    await mysql.commit()
+    res.json({ dataSelect })
   }
 
   catch (error) {
+    console.log(error)
+    await mysql.rollback()
     res.status(404).json({
       title: "Error",
       error: `Ocurrió un problema al ingresar la pregunta de funcionalidad`
