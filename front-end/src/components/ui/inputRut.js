@@ -1,7 +1,8 @@
 import React from 'react'
 
-const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, setFormData, errorLabel, typeForm }) => {
-    console.log("rendericé input form" + name)
+const InputRut = React.memo(({ inputTittle, name, placeholderText, formData, setFormData, errorLabel, typeForm }) => {
+    
+    console.log("rendericé inputRut Form")
 
     return (
         <>
@@ -14,8 +15,11 @@ const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, se
                     type={typeForm}
                     name={name}
                     placeholder={placeholderText}
-                    value={formData.value}
+                    value={formData.formattedRut}
                     onChange={setFormData}
+                    // onKeyUp={handle}
+                    
+                    // onBlur={handle}
                     autoComplete="off"
                 />
                 {formData.valido === null || formData.valido === true ?
@@ -31,4 +35,4 @@ const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, se
     )
 })
 
-export default InputForm
+export default InputRut

@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import Input from '../ui/inputForm'
 import { addFuncionalityResponse } from '../../helpers/funcionality'
+import input from '../../hooks/input'
 import { useParams } from "react-router-dom";
 
 const ResponseInput = ({ nombre }) => {
-
     const { ID } = useParams();
-
-    const [input, setInput] = useState({ pregunta: '', valido: false })
+    const { myInput, setInputValue, clearField } = input({ value: '', valido: null }, 1)
 
     return (
         <div >
@@ -16,22 +15,21 @@ const ResponseInput = ({ nombre }) => {
                 <Input
                     name="pregunta"
                     placeholderText="Ingresa tu respuesta "
-                    formData={input}
-                    setFormData={setInput}
-                    regExpression={4}
+                    formData={myInput}
+                    setFormData={setInputValue}
                     errorLabel={null}
                     typeForm="text"
                 />
             </div>
-            
+
             <div className="d-flex">
-                <button 
-                    className="btn btn-danger mx-auto" 
-                    onClick={ () => {
-                        addFuncionalityResponse(input.pregunta, ID, nombre)
-                        setInput({ pregunta: '', valido: false })
+                <button
+                    className="btn btn-danger mx-auto"
+                    onClick={() => {
+                        addFuncionalityResponse(myInput.value, ID, nombre)
+                        clearField()
                     }}
-    
+
                 >Agregar comentario</button>
             </div>
         </div>

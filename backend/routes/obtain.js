@@ -45,12 +45,11 @@ router.post('/dataMotor', (req, res) => {
 router.post('/dataCotizacion', async (req, res) => {
   const data = req.body;
   const { contactData, selection, pregunta } = data;
-
   try {
     await mysql.beginTransaction()
     const rut = await mysql.query('SELECT * FROM cotizante WHERE id_cotizante = ?', [contactData.rut])
     if (rut.length === 0) {
-      mysql.query('INSERT INTO cotizante set id_cotizante = ?, nombre = ?, apellido = ?, empresa = ?, correo = ?, telefono = ? ', [contactData.rut, contactData.nombre, contactData.apellido, contactData.empresa, contactData.email, contactData.telefono]);
+      await mysql.query('INSERT INTO cotizante set id_cotizante = ?, nombre = ?, apellido = ?, empresa = ?, correo = ?, telefono = ? ', [contactData.rut, contactData.nombre, contactData.apellido, contactData.empresa, contactData.email, contactData.telefono]);
     }
     const dataCotizacion = await mysql.query('INSERT INTO cotizacion set estado = ?, Rut_cotizante = ?', ["Nuevo", contactData.rut])
     for (let i = 0; i < selection.length; i++) {
@@ -100,6 +99,7 @@ router.post('/changeStatusCotizacion', (req, res) => {
 router.post('/addFuncionality', async (req, res) => {
   try {
     const { funcionality, ID, por } = req.body
+    console.log(funcionality, ID, por)
     const dateTime = new Date();
     await mysql.beginTransaction()
     const inserted = await mysql.query('INSERT INTO indicaciones SET pregunta = ?, fecha_ingreso = ?, id_cotizacion = ?, por = ? ', [funcionality, dateTime, ID, por]);

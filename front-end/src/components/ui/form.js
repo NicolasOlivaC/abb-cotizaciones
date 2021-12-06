@@ -7,25 +7,32 @@ import MotorForm1 from './motorForm1';
 import MotorForm2 from './motorForm2';
 import MotorForm3 from './motorForm3'
 
+import input from '../../hooks/input'
+import verifyRut from '../../hooks/rutFormatter'
+
+
 import Modal from './modal'
+
 
 const Form = props => {
     console.log("rendericé form")
     const local = process.env.REACT_APP_LOCAL_HOST
     const { number, addOne, removeOne } = counter(0)
 
-    const [nombre, setNombre] = useState({ nombre: '', valido: null })
-    const [apellido, setApellido] = useState({ apellido: '', valido: null })
-    const [rut, setRut] = useState({ rut: '', valido: null })
-    const [telefono, setTelefono] = useState({ telefono: '', valido: null })
-    const [email, setEmail] = useState({ email: '', valido: null })
-    const [empresa, setEmpresa] = useState({ empresa: '', valido: null })
+    const {myInput: nombre, setInputValue: setNombre} = input({ value: '', valido: null }, 1)
+    const {myInput: apellido, setInputValue: setApellido} = input({ value: '', valido: null }, 1)
+    const {format, rut} = verifyRut()
+    
+    const {myInput: telefono, setInputValue: setTelefono} = input({ value: '', valido: null }, 2)
+    const {myInput: email, setInputValue: setEmail} = input({ value: '', valido: null }, 3)
+    const {myInput: empresa, setInputValue: setEmpresa} = input({ value: '', valido: null }, 1)
 
-    const [rpm, setRpm] = useState({ rpm: '', valido: null })
-    const [hp, setHp] = useState({ hp: '', valido: null })
-    const [peso, setPeso] = useState({ aprx_wt: '', valido: null })
-    const [eficiencia, setEficiencia] = useState({ full_load_efficiency: '', valido: null })
-    const [voltaje, setVoltaje] = useState({ voltage: '', valido: null })
+    const {myInput: rpm, setInputValue: setRpm} = input({ value: '', valido: null }, 2)
+    const {myInput: hp, setInputValue: setHp} = input({ value: '', valido: null }, 2)
+    const {myInput: peso, setInputValue: setPeso} = input({ value: '', valido: null }, 2)
+    const {myInput: eficiencia, setInputValue: setEficiencia} = input({ value: '', valido: null }, 2)
+    const {myInput: voltaje, setInputValue: setVoltaje} = input({ value: '', valido: null }, 2)
+
 
     const [selection, setSelection] = useState([])
 
@@ -35,9 +42,14 @@ const Form = props => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const contactData = { ...nombre, ...apellido, ...rut, ...telefono, ...email, ...empresa }
-        delete contactData.valido;
-
+        const contactData = {
+            nombre: nombre.value,
+            apellido: apellido.value,
+            rut: rut.rut,
+            telefono: telefono.value,
+            email: email.value,
+            empresa: empresa.value 
+        }
         axios.post(local + "/dataCotizacion", { contactData, selection, pregunta })
             .then((received) => {
                 const { numeroSeg } = received.data
@@ -71,7 +83,7 @@ const Form = props => {
                 return <MotorForm1
                     nombre={{ nombre, setNombre }}
                     apellido={{ apellido, setApellido }}
-                    rut={{ rut, setRut }}
+                    rut={{ rut, format }}
                     telefono={{ telefono, setTelefono }}
                     email={{ email, setEmail }}
                     empresa={{ empresa, setEmpresa }}

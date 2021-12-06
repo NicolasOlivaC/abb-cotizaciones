@@ -8,22 +8,25 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
     const dummy = null
     const local = process.env.REACT_APP_LOCAL_HOST
     const [data, setData] = useState([])
-
     const getInfoMotor = (e) => {
 
         e.preventDefault()
         let camposValidos = 0;
         let motorData = {  }
         const data = [rpm.rpm, hp.hp, peso.peso, eficiencia.eficiencia, voltaje.voltaje]
+        const data2 = [
+            {rpm: rpm.rpm.value},
+            {hp: hp.hp.value}, 
+            {aprx_wt: peso.peso.value}, 
+            {full_load_efficiency: eficiencia.eficiencia.value}, 
+            {voltage: voltaje.voltaje.value}]
 
         for (var i = 0; i < 5; i++) {
             if (data[i].valido === true) {
-                motorData = {...motorData, ...data[i]}
+                motorData = {...motorData, ...data2[i]}
                 camposValidos += 1
             }
         }
-
-        delete motorData.valido;
 
         if (camposValidos >= 2) {
             axios.post(local + "/dataMotor", motorData)
@@ -53,7 +56,6 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
                         placeholderText="xx"
                         formData={rpm.rpm}
                         setFormData={rpm.setRpm}
-                        regExpression={2}
                         errorLabel={dummy}
                         typeForm="number"
                     />
@@ -64,7 +66,6 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
                         placeholderText="xx"
                         formData={hp.hp}
                         setFormData={hp.setHp}
-                        regExpression={2}
                         errorLabel={dummy}
                         typeForm="number"
                     />
@@ -75,7 +76,6 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
                         placeholderText="xx"
                         formData={peso.peso}
                         setFormData={peso.setPeso}
-                        regExpression={2}
                         errorLabel={dummy}
                         typeForm="number"
                     />
@@ -86,7 +86,6 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
                         placeholderText="xx"
                         formData={eficiencia.eficiencia}
                         setFormData={eficiencia.setEficiencia}
-                        regExpression={2}
                         errorLabel={dummy}
                         typeForm="number"
                     />
@@ -97,7 +96,6 @@ const MotorForm2 = ({ rpm, hp, peso, eficiencia, voltaje, setSelection }) => {
                         placeholderText="xx"
                         formData={voltaje.voltaje}
                         setFormData={voltaje.setVoltaje}
-                        regExpression={2}
                         errorLabel={dummy}
                         typeForm="number"
                     />

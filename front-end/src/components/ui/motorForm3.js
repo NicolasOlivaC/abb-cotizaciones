@@ -2,7 +2,6 @@
 const motorForm3 = ({pregunta, setPregunta}) => {
 
     console.log("rendericé motorForm3")
-
     const handleChange = (e) =>{
         setPregunta(e.target.value)
     }

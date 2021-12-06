@@ -1,7 +1,7 @@
 import axios from 'axios';
 const local = process.env.REACT_APP_LOCAL_HOST
 
-const addFuncionalityResponse = (funcionality, ID, por) => {
+const addFuncionalityResponse = (funcionality, ID, por, clearField) => {
     axios.post(`${local}/addFuncionality`, { funcionality, ID, por })
         .then((received) => {
             const {dataSelect} = received.data
@@ -34,7 +34,6 @@ const changeCotizationStatus = (choose, ID) => {
 const obtainCotizationData = (setData, ID) => {
     axios.get(`${local}/obtainDataCotizacion`, { params: { ID: ID } })
         .then((received) => {
-            console.log(received)
             setData([received.data[0], received.data[1], received.data[2]])
         })
         .catch(error => {

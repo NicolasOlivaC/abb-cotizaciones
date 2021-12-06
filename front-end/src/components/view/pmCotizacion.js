@@ -53,7 +53,7 @@ const Pm = props => {
                 <div className="divisor ">
                     <div className="w-50 h-auto ">
                         <ContactInformation data={data[0]} ID={ID} />
-                        <ButtonChangeStatus ID = {ID}/>
+                        <ButtonChangeStatus ID={ID} />
                     </div>
                     <div className="w-50">
                         <TableCaractMotor data={data[1]} />

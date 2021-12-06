@@ -1,10 +1,11 @@
 import React from 'react'
 import image from '../../image/place.jpg'
 import Input from './inputForm'
-const MotorForm1 = ({ nombre, apellido, rut, telefono, email, empresa }) => {
+import InputRut from './inputRut'
 
+const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa }) => {
+    
     console.log("rendericé motorForm1")
-
     return (
         <div className="formContainer1 mt-1 border  py-3 px-3 bg-light ">
             <h5>Ingresar información de contacto.</h5>
@@ -21,31 +22,28 @@ const MotorForm1 = ({ nombre, apellido, rut, telefono, email, empresa }) => {
                         placeholderText="John"
                         formData={nombre.nombre}
                         setFormData={nombre.setNombre}
-                        regExpression={1}
                         errorLabel="El nombre no debe contener espacios vacios y caracteres especiales"
                         typeForm="text"
                     />
-                    
                     <Input
                         inputTittle="Apellido"
                         name="apellido"
                         placeholderText="Doe"
                         formData={apellido.apellido}
                         setFormData={apellido.setApellido}
-                        regExpression={1}
                         errorLabel={"El apellido no debe contener espacios vacios y caracteres especiales"}
                         typeForm="text"
                     />
-                    <Input
+                    <InputRut
                         inputTittle="Rut"
                         name="rut"
                         placeholderText="12345678-9"
                         formData={rut.rut}
-                        setFormData={rut.setRut}
-                        regExpression={5}
-                        errorLabel="Ingresa un formato de rut valido"
+                        setFormData={rut.format}
+                        errorLabel="El rut ingresado no es valido"
                         typeForm="text"
                     />
+
                     <Input
                         inputTittle="Telefono"
                         name="telefono"
@@ -80,6 +78,6 @@ const MotorForm1 = ({ nombre, apellido, rut, telefono, email, empresa }) => {
             </div>
         </div>
     )
-}
+})
 
 export default MotorForm1
