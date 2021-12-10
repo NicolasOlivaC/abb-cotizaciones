@@ -50,7 +50,6 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="999999999"
                         formData={telefono.telefono}
                         setFormData={telefono.setTelefono}
-                        regExpression={2}
                         errorLabel={"El numero de telefono no puede contener letras."}
                         typeForm="number"
                     />
@@ -60,7 +59,6 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="jhonnDoe@mail.com"
                         formData={email.email}
                         setFormData={email.setEmail}
-                        regExpression={3}
                         errorLabel={"Ingresa un correo electronico valido"}
                         typeForm="email"
                     />
@@ -70,7 +68,6 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="Jhonn Doe Inc"
                         formData={empresa.empresa}
                         setFormData={empresa.setEmpresa}
-                        regExpression={4}
                         errorLabel={"El nombre de empresa no debe contener espacios vacios y caracteres especiales"}
                         typeForm="text"
                     />

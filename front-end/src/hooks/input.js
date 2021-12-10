@@ -12,7 +12,6 @@ const inputRegex = [
 const Input = (initialState, regExpression) => {
     const [myInput, setInput] = useState(initialState)
 
-
     const setInputValue = useCallback(
         (e) => {
             if (e.target.value.length > 0 && inputRegex[regExpression].test(e.target.value)) {

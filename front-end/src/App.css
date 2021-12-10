@@ -1,8 +1,9 @@
 *{
     margin:0px;
     padding:0px;
-    height: auto;
 }
+
+
 body{
     display: block;
     position: relative;
@@ -13,12 +14,18 @@ body{
     /* margin-left:16.225vw;
     margin-right: 16.225vw !important;
     width:80rem; */
-    height: 100%;
+    height: auto;
+}
+
+.root{
+    height: auto;
 }
 
 .generalContainer{
+    display:block;
     width:80rem;
-    margin: auto;
+    margin: 0 auto;
+    height: auto;
 }
 
 .containerSelect{
@@ -59,7 +66,8 @@ body{
     padding-right: 37px;
     display:flex;
     flex-direction: column;
-    height: auto !important;
+    justify-content: space-between;
+    min-height: 100vh;
 }
 
 .contenedor2{
@@ -74,14 +82,22 @@ body{
 .navBar{
     background-color: white;
     display:flex;
-    overflow:hidden;
     flex-direction: row;
     top: 0;
-    width: 64%;
+    width: 100%;
+    max-width:1206px;
     position:fixed;
     padding-top:40px;
     padding-bottom:13px;
     z-index: 10;
+}
+.navbarA{
+    color:hsl(0, 0%, 43%);
+    text-decoration:none;
+}
+
+.navbarA:hover{
+    color:hsl(0, 100%, 50%);
 }
 
 .listItem{
@@ -341,3 +357,7 @@ hr{
     width: 35px;
 }
 
+.outlineColor:focus{
+    border-color: #f34848;
+    box-shadow: 0 0 0 0.25rem rgba(131, 32, 32, 0.25);
+}

@@ -14,6 +14,7 @@ const Pm = props => {
     const [data, setData] = useState(null)
     const [selection, setSelection] = useState(1)
     const { ID } = useParams();
+    
 
     const handleSelection = () => {
 
@@ -40,7 +41,14 @@ const Pm = props => {
     if (data === null || data?.message) {
         return (
             <>
-                {data === null ? <h1 className="mt-5">Loading...</h1> : <h1 className="mt-5">{data.message}</h1>}
+                {data === null ?
+                    <div className="d-flex justify-content-center mt-5" style={{ padding: "10vh"}}>
+                        <div className="spinner-border text-danger my-5" style={{ width: '7rem', height: "7rem" }} role="status"></div>
+                    </div>
+
+                    :
+
+                    <h1 className="mt-5">{data.message}</h1>}
             </>
         )
     }

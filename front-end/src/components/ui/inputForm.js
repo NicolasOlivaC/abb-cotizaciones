@@ -9,7 +9,7 @@ const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, se
                 { inputTittle ? <label className="mx-auto">{inputTittle}</label> : null}
 
                 <input
-                    className="form-control mx-auto"
+                    className="form-control mx-auto outlineColor"
                     id="input"
                     type={typeForm}
                     name={name}

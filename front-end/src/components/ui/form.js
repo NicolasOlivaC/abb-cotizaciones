@@ -14,7 +14,7 @@ import verifyRut from '../../hooks/rutFormatter'
 import Modal from './modal'
 
 
-const Form = props => {
+const Form = (props) => {
     console.log("rendericé form")
     const local = process.env.REACT_APP_LOCAL_HOST
     const { number, addOne, removeOne } = counter(0)
@@ -22,10 +22,9 @@ const Form = props => {
     const {myInput: nombre, setInputValue: setNombre} = input({ value: '', valido: null }, 1)
     const {myInput: apellido, setInputValue: setApellido} = input({ value: '', valido: null }, 1)
     const {format, rut} = verifyRut()
-    
     const {myInput: telefono, setInputValue: setTelefono} = input({ value: '', valido: null }, 2)
     const {myInput: email, setInputValue: setEmail} = input({ value: '', valido: null }, 3)
-    const {myInput: empresa, setInputValue: setEmpresa} = input({ value: '', valido: null }, 1)
+    const {myInput: empresa, setInputValue: setEmpresa} = input({ value: '', valido: null }, 4)
 
     const {myInput: rpm, setInputValue: setRpm} = input({ value: '', valido: null }, 2)
     const {myInput: hp, setInputValue: setHp} = input({ value: '', valido: null }, 2)
@@ -62,7 +61,8 @@ const Form = props => {
 
     const validateSteps = () => {
         if (number === 0) {
-            if (nombre.valido === true && apellido.valido === true && telefono.valido === true && email.valido && empresa.valido === true && rut.valido === true) {
+            if (nombre.valido === true && apellido.valido === true && telefono.valido === true && 
+                email.valido && empresa.valido === true && rut.valido === true) {
                 addOne()
             }
             else {
@@ -73,9 +73,6 @@ const Form = props => {
             (selection.length >= 1 ? addOne() : alert("Debes seleccionar almenos un motor!"))
         }
     }
-
-
-
 
     const handleComponentForm = () => {
         switch (number) {

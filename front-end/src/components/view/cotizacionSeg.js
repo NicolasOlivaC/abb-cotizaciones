@@ -130,7 +130,14 @@ const CotizacionSeg = props => {
                 </div>
 
                 <div className="my-5">
-                    {data === null ? <h1>Loading...</h1> : <h1>No se encuentra la cotizacion asociada</h1>}
+                    {data === null ?
+
+                        <div className="d-flex justify-content-center mt-5" style={{ padding: "10vh" }}>
+                            <div className="spinner-border text-danger my-5" style={{ width: '7rem', height: "7rem" }} role="status"></div>
+                        </div>
+                        :
+
+                        <h1>No se encuentra la cotizacion asociada</h1>}
                 </div>
             </div>
 

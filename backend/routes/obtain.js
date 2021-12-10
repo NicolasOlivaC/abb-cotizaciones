@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const mysql = require('../mysql/mysql')
+const short = require('short-uuid');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -43,21 +44,23 @@ router.post('/dataMotor', (req, res) => {
 
 
 router.post('/dataCotizacion', async (req, res) => {
-  const data = req.body;
-  const { contactData, selection, pregunta } = data;
+
   try {
+    const data = req.body;
+    const { contactData, selection, pregunta } = data;
+    const myCodeTracking = short.generate();
     await mysql.beginTransaction()
     const rut = await mysql.query('SELECT * FROM cotizante WHERE id_cotizante = ?', [contactData.rut])
     if (rut.length === 0) {
       await mysql.query('INSERT INTO cotizante set id_cotizante = ?, nombre = ?, apellido = ?, empresa = ?, correo = ?, telefono = ? ', [contactData.rut, contactData.nombre, contactData.apellido, contactData.empresa, contactData.email, contactData.telefono]);
     }
-    const dataCotizacion = await mysql.query('INSERT INTO cotizacion set estado = ?, Rut_cotizante = ?', ["Nuevo", contactData.rut])
+    const dataCotizacion = await mysql.query('INSERT INTO cotizacion set id_cotizacion = ?, estado = ?, Rut_cotizante = ?', [myCodeTracking, "Nuevo", contactData.rut])
     for (let i = 0; i < selection.length; i++) {
-      await mysql.query('INSERT INTO detalle set id_descuento = ?,id_cotizacion = ?, catalog_number = ?', [1, dataCotizacion.insertId, selection[i]])
+      await mysql.query('INSERT INTO detalle set id_descuento = ?,id_cotizacion = ?, catalog_number = ?', [1, myCodeTracking, selection[i]])
     }
-    await mysql.query('INSERT INTO indicaciones set pregunta = ?, id_cotizacion = ?, por = ?', [pregunta, dataCotizacion.insertId, contactData.nombre])
+    await mysql.query('INSERT INTO indicaciones set pregunta = ?, id_cotizacion = ?, por = ?', [pregunta, myCodeTracking, contactData.nombre])
     await mysql.commit()
-    res.json({ numeroSeg: "este es el ticket de cotizacion" })
+    res.json({ numeroSeg: `este es el ticket de cotizacion: ${myCodeTracking}` })
   }
 
   catch (error) {
