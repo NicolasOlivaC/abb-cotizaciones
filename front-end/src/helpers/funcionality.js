@@ -6,12 +6,12 @@ const addFuncionalityResponse = (funcionality, ID, por, clearField) => {
         .then((received) => {
             const {dataSelect} = received.data
             document.getElementById("myPregunta").innerHTML += `
-            <div>
+
+            <div key={indice} class='spanChatTittle my-3'>
                 <span><strong>${dataSelect[0].por} - ${dataSelect[0].fecha_ingreso}</strong></span>
-                <p>${dataSelect[0].pregunta}</p>
+                <p class='my-1 px-3'>${dataSelect[0].pregunta}</p>
             </div>
             `
-            
         })
         .catch(error => {
             console.log(error)
@@ -34,13 +34,23 @@ const changeCotizationStatus = (choose, ID) => {
 const obtainCotizationData = (setData, ID) => {
     axios.get(`${local}/obtainDataCotizacion`, { params: { ID: ID } })
         .then((received) => {
-            setData([received.data[0], received.data[1], received.data[2]])
+            setData([received.data[0], received.data[1], received.data[2], received.data[3]])
         })
         .catch(error => {
             setData("error")
         })
 }
 
+const applyDesct = (price, idDesct, detailID) =>{
+    axios.post(`${local}/applyDesct`, { price, idDesct, detailID })
+    .then((received) => {
+        alert(`Cotización cambiada, estado: ${received.data.msg}`)
+    })
+    .catch(error => {
+        alert()
+        console.log(error)
+    })
+}
 
 
-export { addFuncionalityResponse, changeCotizationStatus, obtainCotizationData }
+export { addFuncionalityResponse, changeCotizationStatus, obtainCotizationData, applyDesct }

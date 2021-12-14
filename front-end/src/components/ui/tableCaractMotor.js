@@ -30,7 +30,7 @@ const TableCaractMotor = ({ data }) => {
             </div>
 
 
-            <div className="contenedor3 mt-5" id="flechas">
+            <div className="contenedor3 " id="flechas">
                 <button
                     type="button"
                     style={(number > 0) ? showElement : hideElement}

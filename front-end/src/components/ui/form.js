@@ -86,7 +86,6 @@ const Form = (props) => {
                     empresa={{ empresa, setEmpresa }}
                 />
             case 1:
-
                 return <MotorForm2
                     rpm={{ rpm, setRpm }}
                     hp={{ hp, setHp }}

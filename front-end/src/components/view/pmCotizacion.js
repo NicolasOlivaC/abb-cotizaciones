@@ -14,7 +14,6 @@ const Pm = props => {
     const [data, setData] = useState(null)
     const [selection, setSelection] = useState(1)
     const { ID } = useParams();
-    
 
     const handleSelection = () => {
 
@@ -25,7 +24,7 @@ const Pm = props => {
                 )
             case 2:
                 return (
-                    <CotizacionPrice data={data[1]} />
+                    <CotizacionPrice data={data[1]} desct={data[3]} />
                 )
             default:
                 break;
@@ -42,7 +41,7 @@ const Pm = props => {
         return (
             <>
                 {data === null ?
-                    <div className="d-flex justify-content-center mt-5" style={{ padding: "10vh"}}>
+                    <div className="d-flex justify-content-center mt-5" style={{ padding: "10vh" }}>
                         <div className="spinner-border text-danger my-5" style={{ width: '7rem', height: "7rem" }} role="status"></div>
                     </div>
 
@@ -70,18 +69,24 @@ const Pm = props => {
 
                 <hr className="mt-5" />
 
-                <div className=" mt-3 border w-50 bg-white py-2 px-2 d-flex justify-content-row gap-4 ">
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" onClick={() => setSelection(1)} name="flexRadioDefault" defaultChecked />
-                        <label className="form-check-label" >Indicaciones de funcionalidad</label>
+                <div className='border bg-white my-3'>
+                    <div className=" w-50 d-flex justify-content-row gap-4 p-3 ">
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" onClick={() => setSelection(1)} name="flexRadioDefault" defaultChecked />
+                            <label className="form-check-label" >Indicaciones de funcionalidad</label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" onClick={() => setSelection(2)} name="flexRadioDefault" />
+                            <label className="form-check-label">Asignar descuentos a la cotización</label>
+                        </div>
                     </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" onClick={() => setSelection(2)} name="flexRadioDefault" />
-                        <label className="form-check-label">Asignar descuentos a la cotización</label>
-                    </div>
+
+                    {handleSelection()}
+
                 </div>
 
-                {handleSelection()}
+
+
 
 
             </div>

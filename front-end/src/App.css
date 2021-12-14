@@ -295,7 +295,6 @@ a {
 .divisor2{
     width: 100%;
     height: auto;
-    background-color: #f6f6f6;
 }
 
 .horizontal {
@@ -360,4 +359,10 @@ hr{
 .outlineColor:focus{
     border-color: #f34848;
     box-shadow: 0 0 0 0.25rem rgba(131, 32, 32, 0.25);
+}
+
+.spanChatTittle{
+    background-color: #f6f6f6;
+    padding: 2px 7px;
+    border-radius: 5px;
 }

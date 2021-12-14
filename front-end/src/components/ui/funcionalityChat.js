@@ -6,18 +6,22 @@ const FuncionalityChat = ({ data, nombre }) => {
 
     if (data.length > 0) {
         return (
-            <div className="mt-3">
-                <h4 className="mt-3 ">Indicaciones de funcionalidad</h4>
-                <div className="divisor2 mb-3 px-3 pt-3 pb-2 bg-white" id="myPregunta">
+            <div className="row my-2 mx-0">
+
+                <h5> <i className="fas fa-sign"></i>  Indicaciones de funcionalidad </h5>
+                <div className="divisor2 mt-2 px-3 " id="myPregunta">
                     {data.map((elemento, indice) =>
-                        <div key={indice}>
+                        <div key={indice} className='spanChatTittle my-3'>
                             <span><strong>{elemento.por} - {elemento.fecha} </strong></span>
-                            <p>{elemento.pregunta}</p>
+                            <p className='my-1 px-3'>{elemento.pregunta}</p>
                         </div>)
                     }
 
                 </div>
-                < ResponseInput nombre={nombre} />
+                <div className='mx-2'>
+                    < ResponseInput nombre={nombre} />
+                </div>
+
             </div>
         )
     }

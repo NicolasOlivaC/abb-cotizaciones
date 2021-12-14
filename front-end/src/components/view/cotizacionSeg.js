@@ -8,7 +8,7 @@ import TableCaractMotor from '../ui/tableCaractMotor';
 const CotizacionSeg = props => {
 
     const [data, setData] = useState(null)
-    const [choice, setChoice] = useState(0)
+    const [choice, setChoice] = useState(1)
     const { ID } = useParams();
 
     useEffect(() => {
@@ -24,11 +24,11 @@ const CotizacionSeg = props => {
 
     const handleSelect = () => {
         switch (choice) {
-            case 0:
+            case 1:
                 return (
                     <FuncionalityChat data={data[2]} nombre={data[0].nombre} />
                 )
-            case 1:
+            case 2:
                 return (<h1>nothing here</h1>)
 
             default:
@@ -75,14 +75,13 @@ const CotizacionSeg = props => {
                 </div>
 
 
-                <hr className="mt-5" />
+                <hr className="my-4" />
 
                 <div >
-
                     <h4>   Información general</h4>
                 </div>
 
-                <div className="divisor mt-2">
+                <div className="divisor ">
 
                     <div className="w-50 h-auto ">
                         <ContactInformation data={data[0]} />
@@ -94,22 +93,24 @@ const CotizacionSeg = props => {
                 </div>
 
 
-                <hr className="mt-5" />
+                <hr className="my-4" />
 
-                <div className="mt-3 d-flex justify-content-row gap-4 ">
+                <div className='border bg-white '>
+                    <div className=" w-50 d-flex justify-content-row gap-4 p-3 ">
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" onClick={() => setChoice(1)} name="flexRadioDefault" defaultChecked />
+                            <label className="form-check-label" >Indicaciones de funcionalidad</label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" onClick={() => setChoice(2)} name="flexRadioDefault" />
+                            <label className="form-check-label">Ver precios</label>
+                        </div>
+                    </div>
 
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" onClick={() => setChoice(0)} defaultChecked />
-                        <label className="form-check-label" >Preguntas de funcionalidad</label>
-                    </div>
-                    <div className="form-check">
-                        <input className="form-check-input" type="radio" value={"Aceptado"} name="flexRadioDefault" onClick={() => setChoice(1)} />
-                        <label className="form-check-label">Precios</label>
-                    </div>
-                </div>
-                <div>
                     {handleSelect()}
+
                 </div>
+    
             </div>
         </>
         )

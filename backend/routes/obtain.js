@@ -130,22 +130,20 @@ router.get('/obtainDataCotizacion/', async (req, res) => {
   const query = `SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha, pregunta FROM indicaciones WHERE id_cotizacion = ? ORDER BY fecha`
 
   try {
-
     const dataCotizacion = await mysql.query('SELECT * FROM infoCotizacion WHERE id_cotizacion = ?', ID);
     const dataDetail = await mysql.query("select * from obtainDetail where id_cotizacion = ?", ID);
     const dataIndicacion = await mysql.query(query, ID);
+    const dataDesct = await mysql.query('SELECT * FROM descuentos');
 
     if (dataCotizacion.length === 0 || dataDetail.length == 0) {
       throw new Error();
     }
     else {
-      res.json([...dataCotizacion, dataDetail, dataIndicacion])
+      res.json([...dataCotizacion, dataDetail, dataIndicacion, dataDesct])
     }
-
   }
 
   catch (error) {
-
     res.status(404).json({
       title: "Cotización no encontrada",
       error: `No se encuentra la cotización correspondiente a la ID ${ID}`
@@ -169,6 +167,17 @@ router.get('/prelCot', (req, res) => {
     else {
       res.json(data)
     }
+  })
+})
 
+router.post('/applyDesct', (req, res) => {
+  const { price, idDesct, detailID } = req.body
+  mysql.query('UPDATE detalle SET precio_final = ?, id_descuento = ? WHERE id_detalle = ? ', [price, idDesct, detailID], (error, data) => {
+    if (error) {
+      res.json({ msg: "error" })
+    }
+    else {
+      res.json({ msg: "Precio actualizado" })
+    }
   })
 })
