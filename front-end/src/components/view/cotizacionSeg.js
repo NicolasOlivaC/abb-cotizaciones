@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link as button } from "react-router-dom";
-import { obtainCotizationData } from '../../helpers/funcionality';
+import { obtainCotizationData2 } from '../../helpers/funcionality';
 import ContactInformation from '../ui/contactInformation';
 import FuncionalityChat from '../ui/funcionalityChat';
 import TableCaractMotor from '../ui/tableCaractMotor';
+import ResumePrice from '../ui/resumePrice';
 
 const CotizacionSeg = props => {
 
     const [data, setData] = useState(null)
     const [choice, setChoice] = useState(1)
     const { ID } = useParams();
-
+    console.log(data)
     useEffect(() => {
-        obtainCotizationData(setData, ID)
+        obtainCotizationData2(setData, ID)
     }, [])
 
     const [myinput, setInput] = useState('');
-    console.log(myinput)
 
     const handleChange = (e) => {
         setInput(e.target.value)
@@ -26,16 +26,18 @@ const CotizacionSeg = props => {
         switch (choice) {
             case 1:
                 return (
-                    <FuncionalityChat data={data[2]} nombre={data[0].nombre} />
+                    <ResumePrice data={data[3]} />
+
                 )
             case 2:
-                return (<h1>nothing here</h1>)
+                return (
+                    <FuncionalityChat data={data[2]} nombre={data[0].nombre} />
+                )
 
             default:
                 break;
         }
     }
-    console.log(data)
 
     if (data !== null && data !== "error") {
         return (<>
@@ -45,7 +47,7 @@ const CotizacionSeg = props => {
                 <div className="input-group mt-1">
                     <input type="text" className="form-control" value={myinput} onChange={handleChange} placeholder="XXXX-XXXX-XXXX-XXXX" />
                     <div className="input-group-append mx-2">
-                        <button className="btn btn-danger" onClick={() => obtainCotizationData(setData, myinput)}>Buscar</button>
+                        <button className="btn btn-danger" onClick={() => obtainCotizationData2(setData, myinput)}>Buscar</button>
                     </div>
                 </div>
             </div>
@@ -110,7 +112,7 @@ const CotizacionSeg = props => {
                     {handleSelect()}
 
                 </div>
-    
+
             </div>
         </>
         )
@@ -125,7 +127,7 @@ const CotizacionSeg = props => {
                     <div className="input-group mt-1">
                         <input type="text" className="form-control" value={myinput} onChange={handleChange} placeholder="XXXX-XXXX-XXXX-XXXX" />
                         <div className="input-group-append mx-2">
-                            <button className="btn btn-danger" onClick={() => obtainCotizationData(setData, myinput)}>Buscar</button>
+                            <button className="btn btn-danger" onClick={() => obtainCotizationData2(setData, myinput)}>Buscar</button>
                         </div>
                     </div>
                 </div>

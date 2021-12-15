@@ -14,7 +14,6 @@ const Pm = props => {
     const [data, setData] = useState(null)
     const [selection, setSelection] = useState(1)
     const { ID } = useParams();
-
     const handleSelection = () => {
 
         switch (selection) {

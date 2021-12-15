@@ -134,6 +134,7 @@ router.get('/obtainDataCotizacion/', async (req, res) => {
     const dataDetail = await mysql.query("select * from obtainDetail where id_cotizacion = ?", ID);
     const dataIndicacion = await mysql.query(query, ID);
     const dataDesct = await mysql.query('SELECT * FROM descuentos');
+    
 
     if (dataCotizacion.length === 0 || dataDetail.length == 0) {
       throw new Error();
@@ -151,6 +152,34 @@ router.get('/obtainDataCotizacion/', async (req, res) => {
   }
 })
 
+router.get('/obtainDataCotizacion2/', async (req, res) => {
+
+  const ID = req.query.ID
+
+  const query = `SELECT por, DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha, pregunta FROM indicaciones WHERE id_cotizacion = ? ORDER BY fecha`
+
+  try {
+    const dataCotizacion = await mysql.query('SELECT * FROM infoCotizacion WHERE id_cotizacion = ?', ID);
+    const dataDetail = await mysql.query("select * from obtainDetail where id_cotizacion = ?", ID);
+    const dataIndicacion = await mysql.query(query, ID);
+    const detailCotizacion = await mysql.query('select precio_final, list_price, detalle.catalog_number from detalle, motores where id_cotizacion = ?  AND motores.catalog_number = detalle.catalog_number', ID)
+    if (dataCotizacion.length === 0 || dataDetail.length == 0) {
+      throw new Error();
+    }
+    else {
+      res.json([...dataCotizacion, dataDetail, dataIndicacion, detailCotizacion])
+    }
+  }
+
+  catch (error) {
+    console.log(error)
+    res.status(404).json({
+      title: "Cotización no encontrada",
+      error: `No se encuentra la cotización correspondiente a la ID ${ID}`
+    });
+  }
+})
+
 
 router.get('/prelCot', (req, res) => {
   const option = req.query.option
@@ -158,7 +187,8 @@ router.get('/prelCot', (req, res) => {
   const query = `SELECT id_cotizacion,  DATE_FORMAT(fecha_ingreso,'%d/%m/%Y %H:%i:%s') as fecha_ingreso,
                  DATE_FORMAT(fecha_update,'%d/%m/%Y %H:%i:%s') as fecha_update, nombre, apellido, estado
                  FROM cotizacion, cotizante
-                 WHERE estado = '${option}' AND Rut_cotizante = id_cotizante`
+                 WHERE estado = '${option}' AND Rut_cotizante = id_cotizante
+                 ORDER BY fecha_ingreso ASC`
 
   mysql.query(query, (error, data) => {
     if (error) {
@@ -171,13 +201,22 @@ router.get('/prelCot', (req, res) => {
 })
 
 router.post('/applyDesct', (req, res) => {
-  const { price, idDesct, detailID } = req.body
-  mysql.query('UPDATE detalle SET precio_final = ?, id_descuento = ? WHERE id_detalle = ? ', [price, idDesct, detailID], (error, data) => {
+  const dateTime = new Date();
+  const { price, idDesct, detailID, id_Cotizacion } = req.body
+
+  mysql.query('UPDATE detalle SET fecha_update = ? , precio_final = ?, id_descuento = ? WHERE id_detalle = ? ', [dateTime, price, idDesct, detailID], (error, data) => {
     if (error) {
       res.json({ msg: "error" })
     }
     else {
-      res.json({ msg: "Precio actualizado" })
+      mysql.query('UPDATE cotizacion SET fecha_update = ? WHERE id_cotizacion = ?', [dateTime, id_Cotizacion], (error, data) =>{
+        if(error){
+          res.json({ msg: "error" })
+        }
+        else{
+          res.json({ msg: "Precio actualizado" })
+        }
+      })
     }
   })
 })

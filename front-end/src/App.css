@@ -366,3 +366,33 @@ hr{
     padding: 2px 7px;
     border-radius: 5px;
 }
+
+.liness{
+
+    background-color: red;
+    width: 5px;
+    height: 40px;
+    transform: translatex(175px);
+    border-radius: 10px;
+    margin: 8px 0px;
+}
+
+.liness:after{
+    position: absolute;
+    content: "";
+    z-index: 50;
+    width: 15px;
+    height: 6px;
+    background-color: rgb(255, 255, 255);
+    transform: translateY(10px) translateX(-8px)
+}
+
+.liness:before{
+    position: absolute;
+    content: "";
+    z-index: 50;
+    width: 15px;
+    height: 6px;
+    background-color: rgb(255, 255, 255);
+    transform: translateY(25px) translateX(-8px)
+}
