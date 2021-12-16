@@ -26,12 +26,11 @@ const CotizacionSeg = props => {
         switch (choice) {
             case 1:
                 return (
-                    <ResumePrice data={data[3]} />
-
+                    <FuncionalityChat data={data[2]} nombre={data[0].nombre} />
                 )
             case 2:
                 return (
-                    <FuncionalityChat data={data[2]} nombre={data[0].nombre} />
+                    <ResumePrice data={data[3]} />
                 )
 
             default:

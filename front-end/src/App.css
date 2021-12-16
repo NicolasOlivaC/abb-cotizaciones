@@ -270,13 +270,10 @@ div ul li{
 }
 
 .modalContent{
-    
     background-color: #f6f6f6;
     margin: auto;
-    /* opacity: 100%; */
     width: 30%;
     height: auto;
-    opacity: 100%;
 }
 
 a {

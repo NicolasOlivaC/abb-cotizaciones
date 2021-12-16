@@ -24,7 +24,7 @@ const MenuSelect = props => {
                         </div>
                     </div>
                     <span className="mb-3">o...</span>
-                    <a href="/cotizacion/">Realiza una cotización con nosotros!</a>
+                    <Link to={`/cotizacion`}>Realiza una cotización con nosotros!</Link>
                 </div>
             </div>
         </>
