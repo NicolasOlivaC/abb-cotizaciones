@@ -27,13 +27,19 @@ const RutFormatter = () => {
 
     const format = (e) => {
         let newString = e.target.value.replaceAll('.', '').replace("-", '')
-        if (newString.length <= 9) {
+        // console.log(/^[0-9]+$/.test(newString))
+        console.log(newString)
+        if (newString.length <= 9 && /^[0-9]+$/.test(newString) )  {
+            console.log("entre aca")
             let leftSide = newString.substring(0, newString.length - 1)
             const calculated = verifyRut(leftSide)
             let rigthSide = newString.substring(newString.length, newString.length - 1)
             leftSide = leftSide.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
             let formatted = (newString <= 1 ? rigthSide : leftSide + "-" + rigthSide)
             setRut({ formattedRut: formatted, [e.target.name]: newString, valido: (calculated === rigthSide ? true : false) })
+        }
+        if(newString.length === 0){
+            setRut({ formattedRut: '', [e.target.name]: '', valido: false })
         }
     }
 

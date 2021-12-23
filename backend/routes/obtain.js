@@ -60,7 +60,7 @@ router.post('/dataCotizacion', async (req, res) => {
     }
     await mysql.query('INSERT INTO indicaciones set pregunta = ?, id_cotizacion = ?, por = ?', [pregunta, myCodeTracking, contactData.nombre])
     await mysql.commit()
-    res.json({ numeroSeg: `este es el ticket de cotizacion: ${myCodeTracking}` })
+    res.json({ numeroSeg: myCodeTracking })
   }
 
   catch (error) {

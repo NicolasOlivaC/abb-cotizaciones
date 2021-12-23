@@ -393,3 +393,10 @@ hr{
     background-color: rgb(255, 255, 255);
     transform: translateY(25px) translateX(-8px)
 }
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

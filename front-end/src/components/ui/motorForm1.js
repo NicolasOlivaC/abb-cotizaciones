@@ -22,7 +22,7 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="John"
                         formData={nombre.nombre}
                         setFormData={nombre.setNombre}
-                        errorLabel="El nombre no debe contener espacios vacios y caracteres especiales"
+                        errorLabel="El nombre no puede contener números y caracteres especiales"
                         typeForm="text"
                     />
                     <Input
@@ -31,7 +31,7 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="Doe"
                         formData={apellido.apellido}
                         setFormData={apellido.setApellido}
-                        errorLabel={"El apellido no debe contener espacios vacios y caracteres especiales"}
+                        errorLabel={"El apellido no puede contener números y caracteres especiales"}
                         typeForm="text"
                     />
                     <InputRut
@@ -40,7 +40,7 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="12345678-9"
                         formData={rut.rut}
                         setFormData={rut.format}
-                        errorLabel="El rut ingresado no es valido"
+                        errorLabel="Ingrese un rut valido"
                         typeForm="text"
                     />
 
@@ -50,8 +50,8 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="999999999"
                         formData={telefono.telefono}
                         setFormData={telefono.setTelefono}
-                        errorLabel={"El numero de telefono no puede contener letras."}
-                        typeForm="number"
+                        errorLabel={"El numero de telefono debe contener 9 numeros."}
+                        typeForm="text"
                     />
                     <Input
                         inputTittle="Correo electronico"
@@ -68,7 +68,7 @@ const MotorForm1 = React.memo(({ nombre, apellido, rut, telefono, email, empresa
                         placeholderText="Jhonn Doe Inc"
                         formData={empresa.empresa}
                         setFormData={empresa.setEmpresa}
-                        errorLabel={"El nombre de empresa no debe contener espacios vacios y caracteres especiales"}
+                        errorLabel={"El nombre de la empresa no debe contener caracteres especiales"}
                         typeForm="text"
                     />
                 </form>

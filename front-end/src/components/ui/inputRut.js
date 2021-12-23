@@ -26,7 +26,7 @@ const InputRut = React.memo(({ inputTittle, name, placeholderText, formData, set
 
                     <label className="text-danger mx-2" id="errorName"></label>
                     :
-                    <label className="text-danger mx-2" id="errorName">{errorLabel}</label>
+                    <label className="text-danger mx-2" id="errorName">{(formData.formattedRut.length === 0 ? "El campo no puede estar vacio" : errorLabel )}</label>
 
                 }
 

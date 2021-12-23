@@ -6,7 +6,7 @@ const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, se
     return (
         <>
             <div className="form-group">
-                { inputTittle ? <label className="mx-auto">{inputTittle}</label> : null}
+                {inputTittle ? <label className="mx-auto">{inputTittle}</label> : null}
 
                 <input
                     className="form-control mx-auto outlineColor"
@@ -22,7 +22,9 @@ const InputForm = React.memo(({ inputTittle, name, placeholderText, formData, se
 
                     <label className="text-danger mx-2" id="errorName"></label>
                     :
-                    <label className="text-danger mx-2" id="errorName">{errorLabel}</label>
+                    <label className="text-danger mx-2" id="errorName">
+                        {(formData.value.length === 0 ? "El campo no puede estar vacio" : errorLabel)}
+                    </label>
 
                 }
 

@@ -26,11 +26,11 @@ const Form = (props) => {
     const {myInput: email, setInputValue: setEmail} = input({ value: '', valido: null }, 3)
     const {myInput: empresa, setInputValue: setEmpresa} = input({ value: '', valido: null }, 4)
 
-    const {myInput: rpm, setInputValue: setRpm} = input({ value: '', valido: null }, 2)
-    const {myInput: hp, setInputValue: setHp} = input({ value: '', valido: null }, 2)
-    const {myInput: peso, setInputValue: setPeso} = input({ value: '', valido: null }, 2)
-    const {myInput: eficiencia, setInputValue: setEficiencia} = input({ value: '', valido: null }, 2)
-    const {myInput: voltaje, setInputValue: setVoltaje} = input({ value: '', valido: null }, 2)
+    const {myInput: rpm, setInputValue: setRpm} = input({ value: '', valido: null }, 6)
+    const {myInput: hp, setInputValue: setHp} = input({ value: '', valido: null }, 6)
+    const {myInput: peso, setInputValue: setPeso} = input({ value: '', valido: null }, 6)
+    const {myInput: eficiencia, setInputValue: setEficiencia} = input({ value: '', valido: null }, 6)
+    const {myInput: voltaje, setInputValue: setVoltaje} = input({ value: '', valido: null }, 6)
 
 
     const [selection, setSelection] = useState([])
