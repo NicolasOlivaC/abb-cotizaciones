@@ -12,6 +12,7 @@ const inputRegex = [
 
 const Input = (initialState, regExpression) => {
     const [myInput, setInput] = useState(initialState)
+
     const setInputValue = useCallback(
         (e) => {
 
@@ -46,11 +47,20 @@ const Input = (initialState, regExpression) => {
         [],
     )
 
+    const setInputValue2 = (e) =>{
+        if (e.target.value.length > 0 && inputRegex[regExpression].test(e.target.value.trim())) {
+            setInput({ value: e.target.value, valido: true })
+        }
+        else{
+            setInput({ value: e.target.value, valido: false })
+        }
+    }
+
     const clearField = () =>{
         setInput({value: '', valido: null})
     }
 
-    return { myInput, setInputValue, clearField}
+    return { myInput, setInputValue, setInputValue2, clearField}
 }
 
 

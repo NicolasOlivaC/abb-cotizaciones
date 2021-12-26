@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const ResponseInput = ({ nombre }) => {
     const { ID } = useParams();
-    const { myInput, setInputValue, clearField } = input({ value: '', valido: null }, 1)
+    const { myInput, setInputValue2, clearField } = input({ value: '', valido: null }, 1)
     return (
         <div >
             <span className="align-items-center"><strong>{nombre}</strong></span>
@@ -15,10 +15,9 @@ const ResponseInput = ({ nombre }) => {
                     name="pregunta"
                     placeholderText="Ingresa tu respuesta "
                     formData={myInput}
-                    setFormData={setInputValue}
+                    setFormData={setInputValue2}
                     errorLabel={null}
                     typeForm="text"
-
                 />
             </div>
 
